@@ -1,0 +1,61 @@
+{
+    "test": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "name": "str",
+            "age": "int"
+        },
+        "data": [
+            {
+                "name": "may",
+                "age": "17",
+                "ID": "1"
+            },
+            {
+                "name": "may",
+                "age": "17",
+                "ID": "2"
+            }
+        ]
+    },
+    "routes": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "path": "str",
+            "methods": "str",
+            "callback": "str",
+            "AUTH_LEVEL": "int",
+            "author": "str",
+            "loginReq": "int"
+        },
+        "data": [
+            {
+                "path": "/",
+                "methods": "GET,POST",
+                "callback": "print('hello')",
+                "AUTH_LEVEL": "3",
+                "author": "MAY",
+                "loginReq": "1",
+                "ID": "1"
+            },
+            {
+                "path": "/",
+                "methods": "GET,POST",
+                "callback": "print('hello')",
+                "AUTH_LEVEL": "3",
+                "author": "MAY",
+                "loginReq": "1",
+                "ID": "2"
+            },
+            {
+                "path": "/",
+                "methods": "GET,POST",
+                "callback": "print('hello')",
+                "AUTH_LEVEL": "3",
+                "author": "MAY",
+                "loginReq": "1",
+                "ID": "3"
+            }
+        ]
+    }
+}

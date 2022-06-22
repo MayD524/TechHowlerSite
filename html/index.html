@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <link rel="stylesheet" href="style/style.css">
+        <!-- Download bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Download aes (crypto-js) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+        <!-- Download jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div id="topDisplayBar">
+                <img src="resources/logo.png" alt="logo"/>
+            </div>
+
+
+            <div id="globalNavBar"></div>
+            <!-- Home page -->
+            <div class="row" id="home-view">
+                <div class="col-md-12">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Welcome to the home page</h1>
+                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                        <hr class="my-4">
+                        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="about-view" style="display:none;">
+                <!-- About page -->
+                <p>This is the about page</p>
+            </div>
+            <div class="row" id="contact-view" style="display:none;">
+                <!-- Contact page -->
+                <p>This is the contact page</p>
+            </div>
+        </div>
+    </body>
+    <script src="/dist/main.js"></script>
+    <script>
+        // init all
+        init();
+
+    </script>
+</html>

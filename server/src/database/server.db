@@ -1,0 +1,83 @@
+{
+    "routes": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "path": "str",
+            "methods": "str",
+            "callback": "str",
+            "AUTH_LEVEL": "int",
+            "author": "str",
+            "loginReq": "int"
+        },
+        "data": [
+            {
+                "path": "/",
+                "methods": "GET,POST,PUT",
+                "callback": "./routes/index.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "1"
+            },
+            {
+                "path": "/favicon.ico",
+                "methods": "GET",
+                "callback": "routes/favicon.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "2"
+            },
+            {
+                "path": "/dist/main.js",
+                "methods": "GET",
+                "callback": "routes/getJS.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "3"
+            },
+            {
+                "path": "/style/*",
+                "methods": "GET",
+                "callback": "routes/genCss.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "4"
+            },
+            {
+                "path": "/api/login",
+                "methods": "POST",
+                "callback": "routes/loginService.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "5"
+            },
+            {
+                "path": "/resources/*",
+                "methods": "GET",
+                "callback": "routes/resourceHandler.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "6"
+            }
+        ]
+    },
+    "users": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "username": "str",
+            "password": "str",
+            "studentID": "int",
+            "firstName": "str",
+            "lastName": "str",
+            "grade": "int",
+            "authLevel": "int",
+            "loginInfo": "str"
+        },
+        "data": []
+    }
+}

@@ -1,0 +1,12 @@
+
+
+.header {
+    background: lightblue;
+}
+
+.rightHalf {
+    width: 60vw;
+    height: 10vh;
+    background: darkblue;
+    clip-path: polygon(0 0, 100% 0, 100% 100%)
+}

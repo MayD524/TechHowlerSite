@@ -11,6 +11,7 @@ import logging
 import pprint
 import time
 import json
+import ssl
 import os
 
 
@@ -69,7 +70,7 @@ class httpServer(SimpleHTTPRequestHandler):
         
         ret = route.invoke(cookies, path, "GET", path)
         
-        dType = ret['content-type'] if 'content-type' in ret else 'text/html'
+        dType = ret['dType'] if 'dType' in ret else 'text/html'
         
         self.set_headers(ret['Result'], dType, ret['cookies'])
         if isinstance(ret['OutData'], str):
@@ -132,7 +133,11 @@ def runServer(host:str="localhost", port:int=8080, _handler:dbHandler=None, _rou
         
     serverAddress = (host, port)
     httpd = ThreadingHTTPServer(serverAddress, httpServer)
-    
+    #httpd.socket = ssl.wrap_socket(httpd.socket,
+    #                                server_side=True,
+    #                                certfile='data/techhowler.pem',
+    #                                keyfile="data/selfsigned.key",
+    #                                ssl_version=ssl.PROTOCOL_TLS)
     start_new_thread(autoWriteService, (_handler, ))
     
     try:

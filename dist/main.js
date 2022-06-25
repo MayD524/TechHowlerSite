@@ -6,16 +6,18 @@ class navbar {
         this.elements = {
             "Home": "#home-view",
             "About": "#about-view",
-            "Contact": "#contact-view",
             "Projects": "#projects-view",
             "Blog": "#blog-view",
-            "Clubs": "#clubs-view"
+            "Clubs": "#clubs-view",
+            "Login": "#login-view",
+            "Discussions": "#discussions-view",
+            "Account": "#account-view",
+            "Learn more": "#about-view"
         };
         this.winMgr = winMgr;
         this.initNavbar();
     }
     initNavbar() {
-        // create navbar elements
         let generalNavbar = null;
         document.getElementById('globalNavBar').innerHTML = '';
         generalNavbar = document.createElement('nav');
@@ -23,20 +25,47 @@ class navbar {
         generalNavbar.setAttribute('id', 'globalNavBar1');
         document.getElementById('globalNavBar').appendChild(generalNavbar);
         for (let key in this.elements) {
+            if (key == "Login") {
+                let loginBtn = document.getElementById("login");
+                loginBtn === null || loginBtn === void 0 ? void 0 : loginBtn.addEventListener('click', () => {
+                    this.state = key;
+                    let page = this.elements[key].replace('#', '');
+                    this.winMgr.changePage(page);
+                    this.initNavbar();
+                });
+                continue;
+            }
+            else if (key == "Account") {
+                let accountBtn = document.getElementById("account");
+                accountBtn === null || accountBtn === void 0 ? void 0 : accountBtn.addEventListener('click', () => {
+                    this.state = key;
+                    let page = this.elements[key].replace('#', '');
+                    this.winMgr.changePage(page);
+                    this.initNavbar();
+                });
+                continue;
+            }
+            else if (key == "Learn more") {
+                let lmBtn = document.getElementById("learnMoreHome");
+                lmBtn === null || lmBtn === void 0 ? void 0 : lmBtn.addEventListener('click', () => {
+                    this.state = key;
+                    let page = this.elements[key].replace('#', '');
+                    this.winMgr.changePage(page);
+                    this.initNavbar();
+                });
+                continue;
+            }
             let element = document.createElement('a');
             element.className = 'navbar-item nav-link text-center';
-            // check if the current state is the same as the element
             if (this.state == key) {
                 element.classList.add('active');
             }
-            // pill toggle
             element.addEventListener('click', () => {
                 this.state = key;
                 let page = this.elements[key].replace('#', '');
                 this.winMgr.changePage(page);
                 this.initNavbar();
             });
-            // set data-toggle
             element.setAttribute('data-toggle', 'pill');
             element.innerHTML = key;
             element.href = this.elements[key];
@@ -46,10 +75,56 @@ class navbar {
     }
 }
 ;
+let regState = false;
+let loginElms = [
+    document.getElementById("username_input"),
+    document.getElementById("password_input")
+];
+let registerElms = [
+    document.getElementById("password_conf_input"),
+    document.getElementById("fullNameInput"),
+    document.getElementById("email_input"),
+    document.getElementById("studentID_input"),
+    document.getElementById("studentGrade"),
+];
+let loginSuccess = (response) => {
+    let lgBtn = document.getElementById("login");
+    let lgDiv = document.getElementById('login-view');
+    let accBtn = document.getElementById("account");
+    let accDiv = document.getElementById("account-view");
+    lgBtn.style.display = 'none';
+    lgDiv.style.display = 'none';
+    accBtn.style.display = 'block';
+    accDiv.style.display = 'block';
+    alert("Logged in!");
+    let tmp = loginElms;
+    tmp = tmp.concat(registerElms);
+    tmp.forEach((elm) => {
+        elm.innerText = '';
+    });
+};
+let runLogin = () => {
+    let anyEmpty = anyInputEmpty(loginElms);
+    if (anyEmpty > 0) {
+        alert("Input " + anyEmpty.toString() + " was left empty.");
+        return false;
+    }
+    login(loginElms[0].value, loginElms[1].value, loginSuccess);
+};
+let runRegister = () => {
+    let tmp = loginElms;
+    tmp = tmp.concat(registerElms);
+    let anyEmpty = anyInputEmpty(tmp);
+    if (anyEmpty != -1) {
+        alert("Input " + anyEmpty.toString() + " was left empty.");
+        return false;
+    }
+    console.log(tmp);
+    register(tmp[0].value, tmp[1].value, tmp[2].value, tmp[3].value, tmp[4].value, tmp[5].value, tmp[6].value, loginSuccess);
+};
 let init = () => {
-    let winMgr = new winManager();
-    let nb = new navbar(winMgr);
-    let auth = new authBase(generateTempSessionKey());
+    var winMgr = new winManager();
+    var nb = new navbar(winMgr);
 };
 class winManager {
     constructor() {
@@ -57,16 +132,15 @@ class winManager {
         this.pages = {
             "home-view": document.getElementById('home-view'),
             "about-view": document.getElementById('about-view'),
-            "contact-view": document.getElementById('contact-view'),
             "projects-view": document.getElementById('projects-view'),
             "blog-view": document.getElementById('blog-view'),
-            "clubs-view": document.getElementById('clubs-view')
+            "clubs-view": document.getElementById('clubs-view'),
+            "login-view": document.getElementById('login-view'),
+            "account-view": document.getElementById('account-view'),
+            "discussions-view": document.getElementById('discussions-view')
         };
     }
     hidePages(allBut = "") {
-        /**
-         * Hide all pages except one (if specified) * optional
-         */
         for (let key in this.pages) {
             if (key === allBut || this.pages[key] === null) {
                 continue;
@@ -84,52 +158,55 @@ class winManager {
     }
 }
 ;
-class authBase {
-    constructor(tmpSessionkey) {
-        this.timeStart = new Date().getTime();
-        this.loggedIn = false;
-        this.name = '';
-        this.sessionKey = tmpSessionkey;
-        let data = {
-            key: this.sessionKey,
-            timeStart: this.timeStart,
-            hwInfo: getHWInfo(true)
-        };
-        console.log(data);
-        console.log("requesting login");
-        HTTPRequest('/api/report', HTTPMethods.POST, { hwInfo: getHWInfo(true) }, this.loginCallback.bind(this), generalErrorCallback);
-    }
-    loginCallback(response) {
-        this.loggedIn = true;
-        // get the session key from the response
-        this.timeStart = new Date().getTime();
-        this.sessionKey = response.sessionKey;
-    }
-    login(name, password) {
-        let data = {
-            name: name,
-            password: encrypt(password, this.sessionKey),
-            timeStart: this.timeStart,
-            hwInfo: getHWInfo(true)
-        };
-        HTTPRequest('/api/login', HTTPMethods.POST, data, this.loginCallback.bind(this), generalErrorCallback);
-    }
-}
-;
 let generateTempSessionKey = () => {
     let text = "";
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 16; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     text += new Date().getTime();
     return text;
 };
-/**
- * Just a simple wrapper for CryptoJS
- *  Author: May Draskovics
- *  Date  : 06/15/2022
- */
+let loggedIn = false;
+let currentUser = '';
+let startTime = new Date().getTime();
+let sessionKey = generateTempSessionKey();
+let loginCallback = (response) => {
+    loggedIn = true;
+    startTime = new Date().getTime();
+};
+let login = (name, password, callback = null) => {
+    let data = {
+        name: name,
+        password: password,
+        sessionID: sessionKey,
+        timeStart: startTime,
+        hwInfo: getHWInfo(true)
+    };
+    if (callback === null) {
+        callback = loginCallback;
+    }
+    HTTPRequest('/api/login', HTTPMethods.POST, data, callback, generalErrorCallback);
+};
+let register = (username, password, pwConf, fullName, email, studentID, studentGR, callback = null) => {
+    if (password != pwConf) {
+        alert("Passwords do not match please try again.");
+        return;
+    }
+    if (callback === null) {
+        callback = loginCallback;
+    }
+    let data = {
+        username: username,
+        password: password,
+        studentID: studentID,
+        sessionID: sessionKey,
+        studentGR: studentGR,
+        email: email,
+        fullName: fullName
+    };
+    HTTPRequest('/api/register', HTTPMethods.POST, data, callback, generalErrorCallback);
+};
 let encrypt = (text, key) => {
     let cipher = CryptoJS.AES.encrypt(text, key);
     return cipher.toString();
@@ -147,25 +224,35 @@ let assert = (condition, message, useAlert = true) => {
         throw message;
     }
 };
-/**
- *  General HTTP request functions
- */
+let clearInput = (elmId) => {
+    document.getElementById(elmId).value = "";
+};
+let getInput = (elmId, clear = false, required = false) => {
+    let elm = document.getElementById(elmId);
+    assert(elm != null, 'Could not find element! ' + elmId);
+    let value = elm.value;
+    if (required && value == "")
+        return false;
+    if (clear)
+        clearInput(elmId);
+    return value;
+};
+let anyInputEmpty = (elms) => {
+    for (let i = 0; i < elms.length; i++) {
+        if (elms[i].value == "") {
+            return i;
+        }
+    }
+    return -1;
+};
 let getHWInfo = (isLogin = false) => {
     let answer = true;
     if (!isLogin) {
-        /**
-         *  Tracking is mandatory for login
-         *  this is so we can alert the account
-         *  owner of logins and logouts incase
-         *  they're illegitimate.
-         */
         let untrackable = navigator.doNotTrack === "1" || navigator.doNotTrack === "yes";
         if (!untrackable) {
             answer = confirm("Do you want to get the hardware information?");
         }
         if (untrackable && !answer) {
-            // only important information is collected
-            // anything else doesn't matter at the moment
             return {
                 "os": navigator.platform,
                 "screen": {
@@ -220,7 +307,10 @@ let generalErrorCallback = (error) => {
 };
 let HTTPRequest = (url = "", method = "GET", data, callback, errorCallback) => {
     assert(url !== "", "url is empty");
-    //assert(method in HTTPMethods, "method is not valid");
+    try {
+        data = JSON.stringify(data);
+    }
+    catch (_a) { }
     $.ajax({
         url: url,
         method: method,

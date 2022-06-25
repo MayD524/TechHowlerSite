@@ -23,6 +23,7 @@ class route:
     requiresLogin:bool  ## if the user needs to be logged in
     handler:str         ## custom handler (can be none)
     authLevel:int       ## authentication level
+    dbhandler:dbHandler ## just a local copy of dbHandler
     
     def __str__(self) -> str:
         return f"Routes:\nMethods : {self.methods}\nPath : {self.path}\nLogin : {self.requiresLogin}\nHandler : {self.handler}\nAuth Level : {self.authLevel}"
@@ -38,8 +39,12 @@ class route:
             
             2. OutData (str|bytes) the HTML that should be sent back to whomever
             made the request
+            
+            3. dType (str) the HTTP MineType of the data so that we can get a predictable 
+            and useful base for sending data. And so the client browser has some idea on what
+            we are trying to do.
         
-            3. Cookies (dict) the cookies that are either changed or kept the same;
+            4. Cookies (dict) the cookies that are either changed or kept the same;
             can be set to None and it wont cause any issues.
         
         """
@@ -50,6 +55,7 @@ class route:
             with open(self.handler, 'r') as reader:
                 code = reader.read()
         loc = {
+            'dbhandler': self.dbhandler,
             'inputData' : data,
             'cookies'   : cookies,
             'method'    : method,
@@ -62,6 +68,7 @@ class route:
             'OutData'   : '',
             'Result'    : 500
         }
+        
         exec(code, globals(), loc)
         
         return loc
@@ -90,7 +97,7 @@ class router:
     def __setup(self) -> None:
         dbRoutes = self.__dbhandler.getTable()
         for liRoute in dbRoutes['data']:
-            newRoute  = route(liRoute['methods'].split(","), liRoute['path'], True if liRoute['loginReq'] == '1' else False, liRoute['callback'], int(liRoute['AUTH_LEVEL']))
+            newRoute  = route(liRoute['methods'].split(","), liRoute['path'], True if liRoute['loginReq'] == '1' else False, liRoute['callback'], int(liRoute['AUTH_LEVEL']), self.__dbhandler)
             self.routes.append(newRoute)
         
     def isValidMethod(self, method:str) -> bool:
@@ -121,7 +128,7 @@ class router:
     
     def newRoute(self, methods:list[str], path:str, author:str, handler:str=None, authLevel:int=AUTH_NONE, requiresLogin:bool=False) -> None:
         if not self.isValidRoute(methods, path):
-            self.routes.append(route(methods, path, True if requiresLogin or authLevel != 0 else False , handler, authLevel))
+            self.routes.append(route(methods, path, True if requiresLogin or authLevel != 0 else False , handler, authLevel, self.__dbhandler))
             
             self.__dbhandler.insertAt({
                 "path"       : path,

@@ -63,6 +63,24 @@
                 "author": "May",
                 "loginReq": "0",
                 "ID": "6"
+            },
+            {
+                "path": "/api/register",
+                "methods": "POST",
+                "callback": "routes/registerService.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": "7"
+            },
+            {
+                "path": "/api/makePost",
+                "methods": "POST",
+                "callback": "routes/makePost.py",
+                "AUTH_LEVEL": "1",
+                "author": "May",
+                "loginReq": "1",
+                "ID": "8"
             }
         ]
     },
@@ -76,7 +94,57 @@
             "lastName": "str",
             "grade": "int",
             "authLevel": "int",
-            "loginInfo": "str"
+            "email": "str"
+        },
+        "data": [
+            {
+                "username": "test",
+                "password": "test",
+                "studentID": "12345",
+                "firstName": "test",
+                "lastName": "test",
+                "grade": "12",
+                "authLevel": 1,
+                "email": "test",
+                "ID": "1"
+            }
+        ]
+    },
+    "post": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "author": "str",
+            "postDate": "int",
+            "message": "str",
+            "likes": "int",
+            "parent": "int",
+            "form": "str"
+        },
+        "data": []
+    },
+    "events": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "author": "str",
+            "eventStart": "int",
+            "eventEnd": "int",
+            "eventName": "str",
+            "eventCapacity": "int",
+            "eventLocation": "str"
+        },
+        "data": []
+    },
+    "clubs": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "infinityStatus": "int",
+            "leader": "str",
+            "advisor": "str",
+            "clubName": "str",
+            "members": "str",
+            "meetingDate": "str",
+            "meetingTime": "int",
+            "roomNum": "int"
         },
         "data": []
     }

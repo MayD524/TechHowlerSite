@@ -11,12 +11,15 @@ class navbar {
         this.navbar = document.getElementById('globalNavBar')!;
 
         this.elements = {
-            "Home"    : "#home-view",
-            "About"   : "#about-view",
-            "Contact" : "#contact-view",
-            "Projects": "#projects-view",
-            "Blog"    : "#blog-view",
-            "Clubs"   : "#clubs-view"
+            "Home"          : "#home-view",
+            "About"         : "#about-view",
+            "Projects"      : "#projects-view",
+            "Blog"          : "#blog-view",
+            "Clubs"         : "#clubs-view",
+            "Login"         : "#login-view",
+            "Discussions"   : "#discussions-view",
+            "Account"       : "#account-view",
+            "Learn more"    : "#about-view"
         };
 
         this.winMgr = winMgr;
@@ -35,6 +38,34 @@ class navbar {
         document.getElementById('globalNavBar')!.appendChild(generalNavbar);
 
         for (let key in this.elements) {
+            if (key == "Login") { 
+                let loginBtn = document.getElementById("login");
+                loginBtn?.addEventListener('click', () => {
+                    this.state = key;
+                    let page = this.elements[key].replace('#', '');
+                    this.winMgr.changePage(page);
+                    this.initNavbar();
+                });
+                continue;
+            } else if (key == "Account") {
+                let accountBtn = document.getElementById("account");
+                accountBtn?.addEventListener('click', () => {
+                    this.state = key;
+                    let page = this.elements[key].replace('#', '');
+                    this.winMgr.changePage(page);
+                    this.initNavbar();
+                });
+                continue;
+            } else if (key == "Learn more") {
+                let lmBtn = document.getElementById("learnMoreHome");
+                lmBtn?.addEventListener('click', () => {
+                    this.state = key;
+                    let page = this.elements[key].replace('#', '');
+                    this.winMgr.changePage(page);
+                    this.initNavbar();
+                });
+                continue;
+            }
             let element = document.createElement('a');
             element.className = 'navbar-item nav-link text-center';
             

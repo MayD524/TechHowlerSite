@@ -45,6 +45,11 @@ class dbHandler:
             json.dump(self.data, writer,indent=4)
     
     def _typeof(self, value:str, autoInc:bool=False) -> str:
+        if not isinstance(value, str):
+            try:
+                value = str(value)
+            except:
+                return "unknown"
         if autoInc:
             return "INCREMENTED"
         elif value.isnumeric():

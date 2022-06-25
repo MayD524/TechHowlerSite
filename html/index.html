@@ -15,14 +15,9 @@
     <body>
         <div class="container">
             <div id="topDisplayBar">
-                <div class="col-md-12">
-                    <div class="row">
-                        <img src="resources/logo.png" alt="logo" width="100" height="100"/>
-                        <div class="header">
-                            <div class="rightHalf"></div>
-                        </div>
-                    </div>
-                </div>
+                <img src="resources/logo.png" alt="logo" width="100" height="100"/>
+                <button id="login" class="btn btn-primary float-right">Login</button>
+                <button id="account" class="btn btn-outline-primary float-right" style="display:none;">Account</button>
             </div>
             <div id="globalNavBar"></div>
             <!-- Home page -->
@@ -33,20 +28,192 @@
                             <p class="lead">Brought to you by the wonderful people at the Howler and Tech Team!</p>
                         <hr class="my-4">
                         <p></p>
-                        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                        <a id="learnMoreHome" class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                     </div>
                 </div>
             </div>
-            <div class="row" id="about-view" style="display:none;">
-                <!-- About page -->
-                <p>This is the about page</p>
+
+            <div class="row offset-md-12" id="projects-view" style="display:none;">
+                project stuff
             </div>
-            <div class="row" id="contact-view" style="display:none;">
-                <!-- Contact page -->
-                <p>This is the contact page</p>
+
+            <div class="row offset-md-12" id="blog-view" style="display:none;">
+
+            </div>
+
+            <div class="row offset-md-12" id="clubs-view" style="display:none;">
+                <div class="float-right">
+                    <button class="btn btn-outline-primary" id="createClub">
+                        Create Club
+                    </button>
+                    <button class="btn btn-outline-info" id="createClub">
+                        Join Club
+                    </button>
+                </div>
+                <div id="clubsList" class="row">
+                    <div class="col-sm-6">
+                        <div class="card" style="width:18rem;">
+                            <img class="card-img-top" src="resources/logo.png" alt="Card Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Some club</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Advisor: someone</h6>
+                                <p class="card-text">About the club</p>
+                                <button class="btn btn-info">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row offset-md-12" id="discussions-view" style="display:none;">
+            </div>
+
+            <div class="row offset-md-12" id="about-view" style="display:none;">
+                <div class="col-md-12">
+                    <h2>
+                        About
+                    </h2><br>
+                    <p>
+                        Hello! Thank you for your interest in learning more about this site!
+                        This site is built completely by scratch to make it easier for the continued
+                        maintenance by the future students of Excel. 
+                    </p>
+                    <p>
+                        This site (as currently designed) is run by the 2021-2022 Tech Team and Howler.
+                        This collaboration between clubs aims to help the students of excel and inform and 
+                        help new/returning students find their way through the school year. 
+                    </p>
+
+                    <br><h2>
+                        About the founding team
+                    </h2><br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About May</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Tech Team</h6>
+                                    <p class="card-text"> Some text about may</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About Doug</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Tech Team</h6>
+                                    <p class="card-text"> Some text about Doug... Idk he doesn't need much introduction</p>
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About Kyra</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Tech Team</h6>
+                                    <p class="card-text">Hi my name is Kyra! (They/he/she) Did I help with the designs? You know it :) I love art and drawing, I love listening to music and spending time with friends.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About DeeDee</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Tech Team</h6>
+                                    <p class="card-text"> Some text about DeeDee</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About Camila</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Howler</h6>
+                                    <p class="card-text"> Some text about Camila</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About Mr.Stein</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Tech Team</h6>
+                                    <p class="card-text"> Some text about Mr.Stein</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width:18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">About Ms.Heaphy</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Club: Howler</h6>
+                                    <p class="card-text"> Some text about Ms.Heaphy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- For later use
+                    <br><h2>
+                        About the current team
+                    </h2><br>
+                    -->
+                </div>
+            </div>
+
+            <!-- Login page -->
+            <div class="row offset-md-2" id="login-view" style="display:none;">
+                <input id="username_input" type="text" placeholder="Enter Username" name="username" required>
+                <input id="password_input" type="password" placeholder="Enter Password" name="password" required>
+                <!-- This div is only shown for registration -->
+                <div id="registration" style="display: none;">
+                    <input id="email_input" type="email" placeholder="Enter Email" name="email" required>
+                    <input id="password_conf_input" type="password" placeholder="Re-enter password" name="password2" required>
+                    <br>
+                    <input id="fullNameInput" type="text" placeholder="Enter Your Full name" required>
+                    <br>
+                    <input id="studentID_input" type="text" placeholder="Enter Student ID" name="studentID" required>
+                    <input id="studentGrade" type="text" placeholder="Enter Grade Level" name="sgrade" required>
+                </div>
+                <button onclick="
+                    // if this div doesn't exist I think we have issues
+                    let reg      = document.getElementById('registration');
+                    let loginBtn = document.getElementById('theLoginButton');
+                    let self     = document.getElementById('newUserSetter');
+                    // found in src/login.ts
+                    regState = !regState;
+                    /*  
+                        show/hide the registration stuff based on login status
+                        set the text to be based on current settings, if we are
+                        logging/registering btn text should replicate that.
+                     */ 
+                    if (regState) {
+                        reg.style.display  = 'block';
+                        loginBtn.innerText = 'Register!';
+                        self.innerText     = 'Returning user?'
+                    }
+                    else {
+                        reg.style.display  = 'none';
+                        loginBtn.innerText = 'Login!'
+                        self.innerText     = 'New User?'
+                    }
+                " id="newUserSetter">New User?</button>
+                <button type="submit" onclick="
+                    // functions found in src/login.ts
+                    if (regState)
+                        runRegister();
+                    else
+                        runLogin();
+                " id="theLoginButton">Login!</button>
+            </div>
+            <div class="row offset-md-2" id="account-view" style="display:none;">
+                <p>
+                    Welcome!
+                </p>
             </div>
         </div>
     </body>
+    <!-- This is our compiled typescript -->
     <script src="/dist/main.js"></script>
     <script>
         // init all

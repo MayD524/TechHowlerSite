@@ -1,12 +1,8 @@
 
-
-.header {
-    background: lightblue;
+#login-view {
+    padding: 100px;
 }
 
-.rightHalf {
-    width: 60vw;
-    height: 10vh;
-    background: darkblue;
-    clip-path: polygon(0 0, 100% 0, 100% 100%)
+.col {
+    padding: 10px;
 }

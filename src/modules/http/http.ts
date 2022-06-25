@@ -83,6 +83,10 @@ let HTTPRequest = (url: string="", method: string ="GET", data: any, callback: (
     assert(url !== "", "url is empty");
     //assert(method in HTTPMethods, "method is not valid");
 
+    try {
+        data = JSON.stringify(data);
+    } catch {} // we don't care about the error here
+
     $.ajax({
         url: url,
         method: method,

@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
         <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/calendar.css"
         <!-- Download bootstrap -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Download aes (crypto-js) -->
@@ -30,6 +31,43 @@
                         <p></p>
                         <a id="learnMoreHome" class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                     </div>
+                </div>
+                <div id="calendar" class="col-xl">
+                    <div class="month">
+                        <ul>
+                            <li class="prev disable-select" onclick = "
+                                currentDisplayMonth -= 1;
+                                if (currentDisplayMonth < 0) {
+                                    currentDisplayMonth = 11;
+                                    currentDisplayYear -= 1;
+                                }
+                                generateCalendar(currentDisplayYear, currentDisplayMonth);
+                            " style="cursor:pointer;">&#10094;</li>
+                            <li class="next disable-select" onclick= "
+                                currentDisplayMonth += 1;
+                                if (currentDisplayMonth > MAX_MONTH) {
+                                    currentDisplayMonth = 0;
+                                    currentDisplayYear  += 1;
+                                }
+                                generateCalendar(currentDisplayYear, currentDisplayMonth);
+                            " style="cursor:pointer;">&#10095;</li>
+                            <li><p id="monthName">June</p><br><span style="font-size:18px" id="theYear">2022</span></li>
+                        </ul>
+                    </div>
+
+                    <ul class="weekdays">
+                        <li>Mo</li>
+                        <li>Tu</li>
+                        <li>We</li>
+                        <li>Th</li>
+                        <li>Fr</li>
+                        <li>Sa</li>
+                        <li>Su</li>
+                    </ul>
+
+                    <ul class="days" id="calendarDays">
+
+                    </ul>
                 </div>
             </div>
 
@@ -62,7 +100,50 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="col-sm-6">
+                        <div class="card" style="width:18rem;">
+                            <img class="card-img-top" src="resources/logo.png" alt="Card Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Some club</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Advisor: someone</h6>
+                                <p class="card-text">About the club</p>
+                                <button class="btn btn-info">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card" style="width:18rem;">
+                            <img class="card-img-top" src="resources/logo.png" alt="Card Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Some club</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Advisor: someone</h6>
+                                <p class="card-text">About the club</p>
+                                <button class="btn btn-info">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card" style="width:18rem;">
+                            <img class="card-img-top" src="resources/logo.png" alt="Card Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Some club</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Advisor: someone</h6>
+                                <p class="card-text">About the club</p>
+                                <button class="btn btn-info">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card" style="width:18rem;">
+                            <img class="card-img-top" src="resources/logo.png" alt="Card Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Some club</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Advisor: someone</h6>
+                                <p class="card-text">About the club</p>
+                                <button class="btn btn-info">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

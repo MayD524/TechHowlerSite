@@ -6,3 +6,19 @@
 .col {
     padding: 10px;
 }
+
+/*
+    Disable selecting for all platforms
+    chrome and opera
+    safari
+    konqueror html
+    firefox
+    IE & edge
+*/
+.disable-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}

@@ -1,4 +1,15 @@
 "use strict";
+class info {
+    constructor(name, about, imgPth, team) {
+        this.name = name;
+        this.about = about;
+        this.imgPth = imgPth;
+        this.team = team;
+    }
+}
+;
+let createCard = (clubInfo) => {
+};
 class navbar {
     constructor(winMgr) {
         this.state = 'Home';
@@ -125,6 +136,7 @@ let runRegister = () => {
 let init = () => {
     var winMgr = new winManager();
     var nb = new navbar(winMgr);
+    generateCalendar(today.getFullYear(), today.getMonth());
 };
 class winManager {
     constructor() {
@@ -214,6 +226,55 @@ let encrypt = (text, key) => {
 let decrypt = (text, key) => {
     let cipher = CryptoJS.AES.decrypt(text, key);
     return cipher.toString(CryptoJS.enc.Utf8);
+};
+const MIN_MONTH = 0;
+const MAX_MONTH = 11;
+const MIN_YEAR = 2022;
+const MAX_YEAR = new Date().getFullYear() + 2;
+const today = new Date();
+let currentDisplayYear = today.getFullYear();
+let currentDisplayMonth = today.getMonth();
+const monthsByName = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
+let calenderOnClickEvent = (day, month, year) => {
+    alert("clicked " + day.toString() + "/" + month.toString() + "/" + year.toString());
+};
+let totalDaysInMonth = (year, month) => {
+    return new Date(year, month, 0).getDate();
+};
+let generateCalendar = (year, month) => {
+    assert(!(year < MIN_YEAR || year > MAX_YEAR), "We don't support years less than 2022 nor greater than " + MAX_YEAR.toString() + ".", true);
+    assert(!(month < MIN_MONTH || month > MAX_MONTH), "Months are based on a 0-11 (subtract one to the month) scale.", true);
+    document.getElementById("monthName").innerHTML = monthsByName[month];
+    document.getElementById("theYear").innerHTML = year.toString();
+    let totalDays = totalDaysInMonth(year, month);
+    let daysList = document.getElementById("calendarDays");
+    daysList.innerHTML = '';
+    for (let i = 0; i < totalDays; i++) {
+        let x = document.createElement("li");
+        let txt = i + 1;
+        x.innerText = txt.toString();
+        x.classList.add("disable-select");
+        x.addEventListener('click', () => {
+            calenderOnClickEvent(txt, month + 1, year);
+        });
+        if (month == today.getMonth() && year == today.getFullYear() && today.getDate() == txt) {
+            x.classList.add("active");
+        }
+        daysList.appendChild(x);
+    }
 };
 let assert = (condition, message, useAlert = true) => {
     if (!condition) {

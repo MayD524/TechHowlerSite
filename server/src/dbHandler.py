@@ -153,7 +153,7 @@ class dbHandler:
             inc = 0
             if len(tmpDict['data']) > 0:
                 inc = int(tmpDict['data'][-1]['ID'])
-            data['ID'] = str(inc + 1) 
+            data['ID'] = inc + 1
         assert self.__checkEqual(list(data.keys()), list(tmpDict['scheme'].keys())), f"The data given does not match the scheme of table '{self.cursor.currentTable}'"
         
         for key in data.keys():

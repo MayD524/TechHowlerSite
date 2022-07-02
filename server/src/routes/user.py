@@ -21,9 +21,9 @@ POST:
         pfp
         etc
 """
+from pprint import pprint
 import json
 import os
-from pprint import pprint
 
 def getUserData(username: str, dbHandler) -> dict:
     dbHandler.move("users")
@@ -44,8 +44,10 @@ userPath = inputData.replace(stripable, "")
 
 if method == "GET":
     ## this should just need userPath
-    dt = getUserData(userPath, dbhandler)
+    dt = getUserData(userPath, dbhandler).copy()
     if isinstance(dt, dict):
+        del dt["password"]
+        del dt["warns"]
         OutData = json.dumps(dt, indent=4)
         Result = 200
     else:

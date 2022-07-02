@@ -152,16 +152,16 @@
             {
                 "username": "may",
                 "password": "may",
-                "studentID": "1234567",
+                "studentID": 1234567,
                 "firstName": "May",
                 "lastName": "D",
-                "grade": "12",
+                "grade": 12,
                 "authLevel": 1,
                 "email": "test@gmail.com",
                 "about": "New user say hi!",
-                "pfp": "str",
+                "pfp": "",
                 "status": "",
-                "warns": "0",
+                "warns": 0,
                 "accCreate": "Friday - 5 - 23:42:48 -  Jul/01/2022",
                 "ID": "1"
             }

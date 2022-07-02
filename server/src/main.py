@@ -23,9 +23,9 @@ class httpServer(SimpleHTTPRequestHandler):
     def set_headers(self, code:int=200, dType:str="text/html", cookies:SimpleCookie=None) -> None:
         self.send_response(code)
         self.send_header("Content-type", dType)
-        if cookies:
-            for name, value in cookies.items():
-                self.send_header("Set-Cookie", name + "=" + value)
+        #if cookies:
+        #    for name, value in cookies.items():
+        #        self.send_header("Set-Cookie", name + "=" + value)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "X-Requested-With, content-type")

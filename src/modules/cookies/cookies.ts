@@ -1,8 +1,8 @@
 
 let getCookie = (key: string) : any => {
-    const val = `; ${document.cookie}`;
-    const parts = val.split(`; ${key}=`)[1];
-    return parts.split(";")[0];
+    let val = `; ${document.cookie}`;
+    let parts = val.split(`; ${key}=`)[1];
+    return parts.split(";")[0].trim();
 };
 
 let setCookie = (key: string, value: string) : void => {

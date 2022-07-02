@@ -52,8 +52,7 @@ class navbar {
                     this.state = key;
                     let page = this.elements[key].replace('#', '');
                     this.winMgr.changePage(page);
-                    console.log(getCookie("user"));
-                    getAccountDetails(getCookie("user"));
+                    getAccountDetails(getCookie("username"));
                     this.initNavbar();
                 });
                 continue;
@@ -321,9 +320,9 @@ let anyInputEmpty = (elms) => {
     return -1;
 };
 let getCookie = (key) => {
-    const val = `; ${document.cookie}`;
-    const parts = val.split(`; ${key}=`)[1];
-    return parts.split(";")[0];
+    let val = `; ${document.cookie}`;
+    let parts = val.split(`; ${key}=`)[1];
+    return parts.split(";")[0].trim();
 };
 let setCookie = (key, value) => {
     let cookie = ` ${key}=${value};`;
@@ -404,8 +403,35 @@ let HTTPRequest = (url = "", method = "GET", data, callback, errorCallback) => {
         error: errorCallback
     });
 };
+let grades = [
+    "Freshman",
+    "Sophomore",
+    "Junior",
+    "Senior"
+];
+let numToGrade = (grade) => {
+    try {
+        grade = parseInt(grade);
+    }
+    catch (_a) { }
+    grade -= 9;
+    return grades[grade];
+};
 let accountSuccessCallback = (response) => {
-    console.log(response);
+    let accJson = JSON.parse(response);
+    console.log(accJson);
+    if (accJson.pfp === "") {
+        accJson.pfp = "resources/logo.png";
+    }
+    console.log(accJson);
+    document.getElementById("account-view").innerHTML = `
+    <div class="pfp">
+        <img src=${accJson.pfp} width=150 height=150/>
+    </div>
+    <h3>${accJson.name}</h3>
+    <span class="subtitle"> ${accJson.firstName} ${accJson.lastName} - ${numToGrade(accJson.grade)}</span>
+    <div class="accountAbout"> ${accJson.about} </div>
+    `;
 };
 let getAccountDetails = (account) => {
     HTTPRequest(`/api/users/${account}`, "GET", null, accountSuccessCallback, () => { console.log("account doesn't exist"); });

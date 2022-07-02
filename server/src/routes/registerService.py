@@ -26,16 +26,16 @@ else:
     dbhandler.insert({
         "username" : inputData['username'],
         "password" : inputData['password'], #decryptPassword(inputData['password'], inputData['sessionID']),
-        "studentID": inputData["studentID"],
+        "studentID": int(inputData["studentID"]),
         "firstName": fname,
         "lastName" : lname,
-        "grade"    : inputData['studentGR'],
+        "grade"    : int(inputData['studentGR']),
         "authLevel": AUTH_LOW,
         "email"    : inputData["email"],
         "about"    : "New user say hi!",
         "status"   : "",
         "pfp"      : "",
-        "warns"    : "0",
+        "warns"    : 0,
         "accCreate": datetime.datetime.now().strftime("%A - %w - %H:%M:%S - %Z %b/%d/%Y")
     })
     

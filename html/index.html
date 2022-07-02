@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home</title>
         <link rel="stylesheet" href="style/style.css">
-        <link rel="stylesheet" href="style/calendar.css"
+        <link rel="stylesheet" href="style/overlay.css">
+        <link rel="stylesheet" href="style/calendar.css">
         <!-- Download bootstrap -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Download aes (crypto-js) -->
@@ -15,6 +16,18 @@
     </head>
     <body>
         <div class="container">
+            <div id="overlay">
+                <div class="center">
+                    <div class="dataContainer">
+                        <div class="header">
+                            hello
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="
+                document.getElementById('overlay').style.display = 'block';
+            ">test</button>
             <div id="topDisplayBar">
                 <img src="resources/logo.png" alt="logo" width="100" height="100"/>
                 <button id="login" class="btn btn-primary float-right">Login</button>
@@ -56,17 +69,16 @@
                     </div>
 
                     <ul class="weekdays">
+                        <li>Su</li>
                         <li>Mo</li>
                         <li>Tu</li>
                         <li>We</li>
                         <li>Th</li>
                         <li>Fr</li>
                         <li>Sa</li>
-                        <li>Su</li>
                     </ul>
 
                     <ul class="days" id="calendarDays">
-
                     </ul>
                 </div>
             </div>
@@ -76,7 +88,10 @@
             </div>
 
             <div class="row offset-md-12" id="blog-view" style="display:none;">
-
+                <div id="createBlog">
+                    <button id="blogUploadPicture" class="btn btn-outline-info">Upload</button>
+                    <textarea id="blogData" class="text-secondary" placeholder="Blog stuff here..."></textarea>
+                </div>
             </div>
 
             <div class="row offset-md-12" id="clubs-view" style="display:none;">

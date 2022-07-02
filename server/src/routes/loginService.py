@@ -26,7 +26,7 @@ key   = inputData['sessionID']
 
 if isValidUser(uname, passw, key, dbhandler):
     Result  = 200
-    OutData = "LOGIN_SUCESS;username=%s;session=%s" % (uname, key)
+    OutData = "LOGIN_SUCCESS;username=%s;session=%s" % (uname, key)
 
     cookies['user'] = uname
     cookies['key']  = key

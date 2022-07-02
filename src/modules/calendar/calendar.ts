@@ -21,9 +21,7 @@ const monthsByName = [
     "October",
     "November",
     "December"
-]
-
-
+];
 
 let calenderOnClickEvent = (day: number, month:number, year:number) => {
     alert("clicked " + day.toString() + "/" + month.toString() + "/" + year.toString());
@@ -40,18 +38,28 @@ let generateCalendar = (year:number, month: number) => {
     document.getElementById("monthName")!.innerHTML = monthsByName[month];
     
     document.getElementById("theYear")!.innerHTML = year.toString();
-    let totalDays = totalDaysInMonth(year, month);
+    let totalDays = totalDaysInMonth(year, month+1);
     let daysList  = document.getElementById("calendarDays")!;
     daysList.innerHTML = ''; // clear out the days
 
+    let mnthStart = new Date(Date.UTC(year, month, 0)).getDay()+2;
+    for (let i = 0; i < mnthStart; i++)
+    {
+        let x = document.createElement('li');
+        x.classList.add('disable-select');
+        daysList.appendChild(x);
+    }
+
+
     for(let i = 0; i < totalDays; i++) {
         let x = document.createElement("li");
-        let txt = i + 1; // so we have a [1-31] scale instead of [0-30]
+        let txt = i+1; // so we have a [1-31] scale instead of [0-30]
         x.innerText = txt.toString();
         x.classList.add("disable-select")
         x.addEventListener('click', () => {
             calenderOnClickEvent(txt, month+1, year);
         });
+        
 
         if (month == today.getMonth() && year == today.getFullYear() && today.getDate() == txt)
         {

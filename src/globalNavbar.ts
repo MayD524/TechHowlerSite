@@ -53,6 +53,8 @@ class navbar {
                     this.state = key;
                     let page = this.elements[key].replace('#', '');
                     this.winMgr.changePage(page);
+                    console.log(getCookie("user"))
+                    getAccountDetails(getCookie("user"));
                     this.initNavbar();
                 });
                 continue;

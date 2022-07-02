@@ -81,32 +81,15 @@
                 "author": "May",
                 "loginReq": "1",
                 "ID": "8"
-            }
-        ]
-    },
-    "users": {
-        "scheme": {
-            "ID": "INCREMENTED",
-            "username": "str",
-            "password": "str",
-            "studentID": "int",
-            "firstName": "str",
-            "lastName": "str",
-            "grade": "int",
-            "authLevel": "int",
-            "email": "str"
-        },
-        "data": [
+            },
             {
-                "username": "test",
-                "password": "test",
-                "studentID": "12345",
-                "firstName": "test",
-                "lastName": "test",
-                "grade": "12",
-                "authLevel": 1,
-                "email": "test",
-                "ID": "1"
+                "path": "/api/users/*",
+                "methods": "POST,GET",
+                "callback": "routes/user.py",
+                "AUTH_LEVEL": "1",
+                "author": "May",
+                "loginReq": "1",
+                "ID": "9"
             }
         ]
     },
@@ -147,5 +130,41 @@
             "roomNum": "int"
         },
         "data": []
+    },
+    "users": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "username": "str",
+            "password": "str",
+            "studentID": "int",
+            "firstName": "str",
+            "lastName": "str",
+            "grade": "int",
+            "authLevel": "int",
+            "email": "str",
+            "about": "str",
+            "pfp": "str",
+            "status": "str",
+            "warns": "int",
+            "accCreate": "str"
+        },
+        "data": [
+            {
+                "username": "may",
+                "password": "may",
+                "studentID": "1234567",
+                "firstName": "May",
+                "lastName": "D",
+                "grade": "12",
+                "authLevel": 1,
+                "email": "test@gmail.com",
+                "about": "New user say hi!",
+                "pfp": "str",
+                "status": "",
+                "warns": "0",
+                "accCreate": "Friday - 5 - 23:42:48 -  Jul/01/2022",
+                "ID": "1"
+            }
+        ]
     }
 }

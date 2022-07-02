@@ -55,7 +55,7 @@ class route:
             with open(self.handler, 'r') as reader:
                 code = reader.read()
         loc = {
-            'dbhandler': self.dbhandler,
+            'dbhandler' : self.dbhandler,
             'inputData' : data,
             'cookies'   : cookies,
             'method'    : method,

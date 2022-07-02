@@ -12,7 +12,7 @@ let currentUser = '';
 let startTime = new Date().getTime();
 let sessionKey = generateTempSessionKey();
 
-let loginCallback = (response: any) => {
+let loginCallback = (response: string) => {
     loggedIn = true;
     // get the session key from the response
     startTime = new Date().getTime();

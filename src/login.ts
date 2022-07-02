@@ -23,7 +23,15 @@ let registerElms = [
     (document.getElementById("studentGrade")! as HTMLInputElement),
 ]
 
-let loginSuccess = (response: any) => {
+let loginSuccess = (response: string) => {
+    response = response.replace("LOGIN_SUCCESS;", "");
+    let cookies = response.split(";");
+
+    cookies.forEach(element => {
+        let x = element.split("=");
+        setCookie(x[0], x[1]);
+    });
+
     let lgBtn  = document.getElementById("login")!;
     let lgDiv  = document.getElementById('login-view')!;
     let accBtn = document.getElementById("account")!;

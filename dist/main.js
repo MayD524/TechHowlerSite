@@ -52,6 +52,8 @@ class navbar {
                     this.state = key;
                     let page = this.elements[key].replace('#', '');
                     this.winMgr.changePage(page);
+                    console.log(getCookie("user"));
+                    getAccountDetails(getCookie("user"));
                     this.initNavbar();
                 });
                 continue;
@@ -99,6 +101,12 @@ let registerElms = [
     document.getElementById("studentGrade"),
 ];
 let loginSuccess = (response) => {
+    response = response.replace("LOGIN_SUCCESS;", "");
+    let cookies = response.split(";");
+    cookies.forEach(element => {
+        let x = element.split("=");
+        setCookie(x[0], x[1]);
+    });
     let lgBtn = document.getElementById("login");
     let lgDiv = document.getElementById('login-view');
     let accBtn = document.getElementById("account");
@@ -259,9 +267,15 @@ let generateCalendar = (year, month) => {
     assert(!(month < MIN_MONTH || month > MAX_MONTH), "Months are based on a 0-11 (subtract one to the month) scale.", true);
     document.getElementById("monthName").innerHTML = monthsByName[month];
     document.getElementById("theYear").innerHTML = year.toString();
-    let totalDays = totalDaysInMonth(year, month);
+    let totalDays = totalDaysInMonth(year, month + 1);
     let daysList = document.getElementById("calendarDays");
     daysList.innerHTML = '';
+    let mnthStart = new Date(Date.UTC(year, month, 0)).getDay() + 2;
+    for (let i = 0; i < mnthStart; i++) {
+        let x = document.createElement('li');
+        x.classList.add('disable-select');
+        daysList.appendChild(x);
+    }
     for (let i = 0; i < totalDays; i++) {
         let x = document.createElement("li");
         let txt = i + 1;
@@ -305,6 +319,15 @@ let anyInputEmpty = (elms) => {
         }
     }
     return -1;
+};
+let getCookie = (key) => {
+    const val = `; ${document.cookie}`;
+    const parts = val.split(`; ${key}=`)[1];
+    return parts.split(";")[0];
+};
+let setCookie = (key, value) => {
+    let cookie = ` ${key}=${value};`;
+    document.cookie += cookie;
 };
 let getHWInfo = (isLogin = false) => {
     let answer = true;
@@ -368,6 +391,7 @@ let generalErrorCallback = (error) => {
 };
 let HTTPRequest = (url = "", method = "GET", data, callback, errorCallback) => {
     assert(url !== "", "url is empty");
+    console.log(url);
     try {
         data = JSON.stringify(data);
     }
@@ -379,4 +403,13 @@ let HTTPRequest = (url = "", method = "GET", data, callback, errorCallback) => {
         success: callback,
         error: errorCallback
     });
+};
+let accountSuccessCallback = (response) => {
+    console.log(response);
+};
+let getAccountDetails = (account) => {
+    HTTPRequest(`/api/users/${account}`, "GET", null, accountSuccessCallback, () => { console.log("account doesn't exist"); });
+};
+let newPopup = (url) => {
+    let popupWin = window.open(url, 'popUpWindow', 'resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes');
 };

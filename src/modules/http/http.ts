@@ -81,6 +81,7 @@ let generalErrorCallback = (error: any) => {
 
 let HTTPRequest = (url: string="", method: string ="GET", data: any, callback: (response: any) => void, errorCallback: (error: any) => void) => {
     assert(url !== "", "url is empty");
+    console.log(url);
     //assert(method in HTTPMethods, "method is not valid");
 
     try {

@@ -116,14 +116,14 @@ def loggingSetup(   level:int=logging.INFO,
 
 def setRoutes() -> None:
     _router.newRoute(["GET", "POST", "PUT"] , "/"             , "May", "routes/index.py"   , AUTH_NONE, False)
-    _router.newRoute(["GET"]                , "/favicon.ico"  , 'May', 'routes/favicon.py'                   )
-    _router.newRoute(['GET']                , '/dist/main.js' , 'May', 'routes/getJS.py'                     )
-    _router.newRoute(['GET']                , '/style/*'      , 'May', 'routes/genCss.py'                    )
-    _router.newRoute(["POST"]               , "/api/login"    , 'May', 'routes/loginService.py'              )
+    _router.newRoute(["GET"]                , "/favicon.ico"  , "May", 'routes/favicon.py'                   )
+    _router.newRoute(['GET']                , '/dist/main.js' , "May", 'routes/getJS.py'                     )
+    _router.newRoute(['GET']                , '/style/*'      , "May", 'routes/genCss.py'                    )
+    _router.newRoute(["POST"]               , "/api/login"    , "May", 'routes/loginService.py'              )
     _router.newRoute(["GET"]                , "/resources/*"  , "May", 'routes/resourceHandler.py'           )
     _router.newRoute(["POST"]               , "/api/register" , "May", 'routes/registerService.py'           )
     _router.newRoute(["POST"]               , "/api/makePost" , "May", 'routes/makePost.py' , AUTH_LOW, True )
-    
+    _router.newRoute(["POST", "GET"]        , "/api/users/*"     , "May", 'routes/user.py'     , AUTH_LOW, True )
     _generalHandler.move("")
     _generalHandler.newTable("users", {
         "ID"       : "INCREMENTED",
@@ -134,7 +134,12 @@ def setRoutes() -> None:
         "lastName" : "str",
         "grade"    : "int",
         "authLevel": "int",
-        "email"    : "str"
+        "email"    : "str",
+        "about"    : "str",
+        "pfp"      : "str",
+        "status"   : "str",
+        "warns"    : "int",
+        "accCreate": "str"
         })
 
     _generalHandler.newTable("post", {

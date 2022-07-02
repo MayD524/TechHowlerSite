@@ -1,4 +1,4 @@
-
+import datetime
 def decryptPassword(passw:str, key:str) -> str:
     from base64 import b64encode
     from Crypto.Util.Padding import pad, unpad
@@ -31,7 +31,12 @@ else:
         "lastName" : lname,
         "grade"    : inputData['studentGR'],
         "authLevel": AUTH_LOW,
-        "email"    : inputData["email"]
+        "email"    : inputData["email"],
+        "about"    : "New user say hi!",
+        "status"   : "",
+        "pfp"      : "",
+        "warns"    : "0",
+        "accCreate": datetime.datetime.now().strftime("%A - %w - %H:%M:%S - %Z %b/%d/%Y")
     })
     
     Result = 200

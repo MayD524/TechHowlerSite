@@ -28,5 +28,5 @@ class info {
  */
 
 let createCard = (clubInfo:info) => {
-
+    
 };

@@ -1,0 +1,40 @@
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(17, 17, 17, 0.532);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#overlay .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+#overlay .header {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+#overlay .dataContainer {
+    border:1px solid wheat;
+    border-radius: 1.5rem;
+    width: 30rem;
+    height: 40rem;
+    width: 50% inherit;
+    height: 50% inherit;
+    background-color: wheat;
+}

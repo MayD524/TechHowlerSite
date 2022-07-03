@@ -164,6 +164,22 @@
                 "warns": 0,
                 "accCreate": "Friday - 5 - 23:42:48 -  Jul/01/2022",
                 "ID": "1"
+            },
+            {
+                "username": "Sisyphus",
+                "password": "may",
+                "studentID": 141,
+                "firstName": "Douglas",
+                "lastName": "S",
+                "grade": 14,
+                "authLevel": 4,
+                "email": "test@gmail.com",
+                "about": "No.",
+                "pfp": "",
+                "status": "",
+                "warns": 0,
+                "accCreate": "Saturday - 2 - 20:48:48 -  Jul/02/2022",
+                "ID": "0"
             }
         ]
     }

@@ -116,8 +116,10 @@ def loggingSetup(   level:int=logging.INFO,
 
 def setRoutes() -> None:
     _router.newRoute(["GET", "POST", "PUT"] , "/"             , "May", "routes/index.py"   , AUTH_NONE, False)
+    _router.newRoute(["GET"]                , "/sw.js"        , "May", "routes/sw.py"       , AUTH_NONE, False)
+    _router.newRoute(["GET", "POST", "PUT"] , "/html"         , "May", "routes/index.py"   , AUTH_NONE, False)
     _router.newRoute(["GET"]                , "/favicon.ico"  , "May", 'routes/favicon.py'                   )
-    _router.newRoute(['GET']                , '/dist/main.js' , "May", 'routes/getJS.py'                     )
+    _router.newRoute(['GET']                , '/dist/*'       , "May", 'routes/getJS.py'                     )
     _router.newRoute(['GET']                , '/style/*'      , "May", 'routes/genCss.py'                    )
     _router.newRoute(["POST"]               , "/api/login"    , "May", 'routes/loginService.py'              )
     _router.newRoute(["GET"]                , "/resources/*"  , "May", 'routes/resourceHandler.py'           )

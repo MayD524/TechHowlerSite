@@ -141,6 +141,11 @@ let runRegister = () => {
     console.log(tmp);
     register(tmp[0].value, tmp[1].value, tmp[2].value, tmp[3].value, tmp[4].value, tmp[5].value, tmp[6].value, loginSuccess);
 };
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js', { scope: "http://localhost:8080/" }).then(function (reg) {
+        console.log('Registration succeeded. Scope is ' + reg.scope);
+    });
+}
 let init = () => {
     var winMgr = new winManager();
     var nb = new navbar(winMgr);

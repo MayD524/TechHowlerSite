@@ -29,7 +29,7 @@
                 "ID": "2"
             },
             {
-                "path": "/dist/main.js",
+                "path": "/dist/*",
                 "methods": "GET",
                 "callback": "routes/getJS.py",
                 "AUTH_LEVEL": "0",
@@ -90,6 +90,24 @@
                 "author": "May",
                 "loginReq": "1",
                 "ID": "9"
+            },
+            {
+                "path": "/html",
+                "methods": "GET,POST,PUT",
+                "callback": "routes/index.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": 10
+            },
+            {
+                "path": "/sw.js",
+                "methods": "GET",
+                "callback": "routes/sw.py",
+                "AUTH_LEVEL": "0",
+                "author": "May",
+                "loginReq": "0",
+                "ID": 11
             }
         ]
     },

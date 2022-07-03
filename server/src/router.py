@@ -13,8 +13,8 @@ METHODS: list[str] = [
 AUTH_NONE = 0 # No authentication required
 AUTH_LOW  = 1 # User must be logged in
 AUTH_MED  = 2 # User must be logged in and be staff/Student Leader
-AUTH_HIGH = 2 # User must be admin
-AUTH_DEV  = 3 # User must be developer
+AUTH_HIGH = 3 # User must be admin
+AUTH_DEV  = 4 # User must be developer
 
 @dataclass
 class route:

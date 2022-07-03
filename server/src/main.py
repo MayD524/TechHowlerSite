@@ -123,7 +123,7 @@ def setRoutes() -> None:
     _router.newRoute(["GET"]                , "/resources/*"  , "May", 'routes/resourceHandler.py'           )
     _router.newRoute(["POST"]               , "/api/register" , "May", 'routes/registerService.py'           )
     _router.newRoute(["POST"]               , "/api/makePost" , "May", 'routes/makePost.py' , AUTH_LOW, True )
-    _router.newRoute(["POST", "GET"]        , "/api/users/*"     , "May", 'routes/user.py'     , AUTH_LOW, True )
+    _router.newRoute(["POST", "GET"]        , "/api/users/*"  , "May", 'routes/user.py'     , AUTH_LOW, True )
     _generalHandler.move("")
     _generalHandler.newTable("users", {
         "ID"       : "INCREMENTED",

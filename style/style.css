@@ -32,3 +32,12 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
+
+.subtitle {
+    color: rgba(5, 5, 5, 0.394)
+}
+
+.accountAbout {
+    font-size: 20;
+    padding-top: 1.5rem;
+}

@@ -41,13 +41,14 @@ let loginSuccess = (response: string) => {
     lgDiv.style.display = 'none';
     accBtn.style.display = 'block';
     accDiv.style.display = 'block';
-    alert("Logged in!")
-
+    
     let tmp = loginElms;
     tmp = tmp.concat(registerElms);
     tmp.forEach((elm) => {
         elm.innerText = '';
     });
+    getAccountDetails(getCookie("username"));
+    alert("Logged in!");
 };
 
 

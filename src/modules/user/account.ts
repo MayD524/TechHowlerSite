@@ -28,9 +28,9 @@ let accountSuccessCallback = (response: string) => {
     <div class="pfp">
         <img src=${accJson.pfp} width=150 height=150/>
     </div>
-    <h3>${accJson.name}</h3>
+    <h3>${accJson.username}</h3>
     <span class="subtitle"> ${accJson.firstName} ${accJson.lastName} - ${numToGrade(accJson.grade)}</span>
-    <div class="accountAbout"> ${accJson.about} </div>
+    <div class="accountAbout"><h5>About: </h5> ${accJson.about} </div>
     `;
 
 };

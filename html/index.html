@@ -261,17 +261,17 @@
 
             <!-- Login page -->
             <div class="row offset-md-2" id="login-view" style="display:none;">
-                <input id="username_input" type="text" placeholder="Enter Username" name="username" required>
-                <input id="password_input" type="password" placeholder="Enter Password" name="password" required>
+                <div id="errorText"></div>
+                <span class="inputTitle"> Username: </span><br><input id="username_input" type="text" placeholder="Enter Username" name="username" required><br>
+                <span class="inputTitle"> Password: </span><br><input id="password_input" type="password" placeholder="Enter Password" name="password" required><br>
                 <!-- This div is only shown for registration -->
                 <div id="registration" style="display: none;">
-                    <input id="email_input" type="email" placeholder="Enter Email" name="email" required>
-                    <input id="password_conf_input" type="password" placeholder="Re-enter password" name="password2" required>
+                    <span class="inputTitle"> email: </span><br><input id="email_input" type="email" placeholder="Enter Email" name="email" required><br>
                     <br>
-                    <input id="fullNameInput" type="text" placeholder="Enter Your Full name" required>
+                    <span class="inputTitle"> Full name: (Space between first and last)</span><br><input id="fullNameInput" type="text" placeholder="Enter Your Full name" required><br>
                     <br>
-                    <input id="studentID_input" type="text" placeholder="Enter Student ID" name="studentID" required>
-                    <input id="studentGrade" type="text" placeholder="Enter Grade Level" name="sgrade" required>
+                    <span class="inputTitle"> Student ID: </span><br><input id="studentID_input" type="text" placeholder="Enter Student ID" name="studentID" required><br>
+                    <span class="inputTitle"> Grade or 'staff': </span><br><input id="studentGrade" type="text" placeholder="Enter Grade Level" name="sgrade" required><br>
                 </div>
                 <button onclick="
                     // if this div doesn't exist I think we have issues
@@ -295,8 +295,8 @@
                         loginBtn.innerText = 'Login!'
                         self.innerText     = 'New User?'
                     }
-                " id="newUserSetter">New User?</button>
-                <button type="submit" onclick="
+                "class="btn btn-secondary" id="newUserSetter">New User?</button>
+                <button type="submit" class="btn btn-primary" onclick="
                     // functions found in src/login.ts
                     if (regState)
                         runRegister();

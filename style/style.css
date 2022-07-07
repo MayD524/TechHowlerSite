@@ -2,6 +2,23 @@
     padding: 100px;
 }
 
+#login-view .inputTitle {
+    padding-top: 20px;
+}
+
+#login-view input {
+    padding: 10px 20px;
+}
+
+#login-view input[type=text]:focus {
+    border: 3px solid #555;
+    /*
+    just for safe keepings
+    background: linear-gradient(90deg, rgba(51, 46, 149, .3) 0%, rgba(9,9,121,.3) 35%, rgba(0,212,255,.3) 100%);
+    outline: linear-gradient(90deg, rgba(51, 46, 149, .3) 0%, rgba(9,9,121,.3) 35%, rgba(0,212,255,.3) 100%);
+    */
+}
+
 .col {
     padding: 10px;
 }
@@ -16,6 +33,12 @@
     height: 5rem;
     resize: none;
 }
+
+.inputFail {
+    outline-color: red;
+    outline-style: dashed;
+}
+
 
 /*
     Disable selecting for all platforms

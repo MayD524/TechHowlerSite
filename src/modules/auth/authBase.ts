@@ -32,21 +32,39 @@ let login = (name: string, password: string, callback:any=null) => {
     HTTPRequest('/api/login', HTTPMethods.POST, data, callback, generalErrorCallback);
 }
 
+let isValidEmail = (email:string) : boolean => {
+    return email.includes("@excelacademy.org") || email.includes("@students.excelacademy.org");
+}
+
+let isValidPassword = (passW: string) : number => {
+    /**
+     *  Check if a password is valid
+     * 
+     * 
+     *  TODO:
+     *  Rules:
+     *      0 -> no action required
+     *     10 -> password too short
+     *    100 -> lacks special character
+     *   1000 -> lacks numbers/uppercase
+     */
+    
+    let ret = 0;
+    if (passW.length < 8)
+        ret += 10;
+
+    return ret;
+}
+
+
 let register = (username  : string,
                 password  : string,
-                pwConf    : string,
                 fullName  : string,
                 email     : string,
                 studentID : string,
                 studentGR : string,
                 callback  : any=null
     ) => {
-    
-    if (password != pwConf)
-    {
-        alert("Passwords do not match please try again.");
-        return;
-    }
 
     if (callback === null) {
         callback = loginCallback

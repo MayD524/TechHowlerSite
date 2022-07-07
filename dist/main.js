@@ -88,12 +88,12 @@ class navbar {
 }
 ;
 let regState = false;
+let errorText = document.getElementById("errorText");
 let loginElms = [
     document.getElementById("username_input"),
     document.getElementById("password_input")
 ];
 let registerElms = [
-    document.getElementById("password_conf_input"),
     document.getElementById("fullNameInput"),
     document.getElementById("email_input"),
     document.getElementById("studentID_input"),
@@ -138,13 +138,34 @@ let runRegister = () => {
         alert("Input " + anyEmpty.toString() + " was left empty.");
         return false;
     }
-    console.log(tmp);
-    register(tmp[0].value, tmp[1].value, tmp[2].value, tmp[3].value, tmp[4].value, tmp[5].value, tmp[6].value, loginSuccess);
+    if (isValidPassword(tmp[1].value) != 0) {
+        tmp[1].classList.add("inputFail");
+        errorText.innerText = "Password must be longer than 8 characters.";
+        return;
+    }
+    if (!isValidEmail(tmp[3].value)) {
+        tmp[3].classList.add("inputFail");
+        errorText.innerText = "Email is not a valid Excel Academy email.";
+        return;
+    }
+    if (tmp[5].value != "staff") {
+        if (Number(tmp[6].value) > 12 || Number(tmp[5].value) < 5) {
+            tmp[5].classList.add("inputFail");
+            errorText.innerText = "The grade level given is not within 5th to 12th grade please try again.";
+            return;
+        }
+    }
+    else {
+        tmp[5].value = "1000";
+    }
+    if (!tmp[2].value.includes(" ")) {
+        tmp[2].classList.add("inputFail");
+        errorText.innerText = "Please have a space between your first and last name. Thank you.";
+        return;
+    }
+    register(tmp[0].value, tmp[1].value, tmp[2].value, tmp[3].value, tmp[4].value, tmp[5].value, loginSuccess);
 };
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js', { scope: "http://localhost:8080/" }).then(function (reg) {
-        console.log('Registration succeeded. Scope is ' + reg.scope);
-    });
 }
 let init = () => {
     var winMgr = new winManager();
@@ -213,11 +234,16 @@ let login = (name, password, callback = null) => {
     }
     HTTPRequest('/api/login', HTTPMethods.POST, data, callback, generalErrorCallback);
 };
-let register = (username, password, pwConf, fullName, email, studentID, studentGR, callback = null) => {
-    if (password != pwConf) {
-        alert("Passwords do not match please try again.");
-        return;
-    }
+let isValidEmail = (email) => {
+    return email.includes("@excelacademy.org") || email.includes("@students.excelacademy.org");
+};
+let isValidPassword = (passW) => {
+    let ret = 0;
+    if (passW.length < 8)
+        ret += 10;
+    return ret;
+};
+let register = (username, password, fullName, email, studentID, studentGR, callback = null) => {
     if (callback === null) {
         callback = loginCallback;
     }
@@ -307,6 +333,12 @@ let assert = (condition, message, useAlert = true) => {
 let clearInput = (elmId) => {
     document.getElementById(elmId).value = "";
 };
+let counter = (str) => {
+    return str.split('').reduce((total, letter) => {
+        total[letter] ? total[letter]++ : total[letter] = 1;
+        return total;
+    }, {});
+};
 let getInput = (elmId, clear = false, required = false) => {
     let elm = document.getElementById(elmId);
     assert(elm != null, 'Could not find element! ' + elmId);
@@ -325,13 +357,26 @@ let anyInputEmpty = (elms) => {
     }
     return -1;
 };
-let getCookie = (key) => {
+let cookies = [];
+let getCookiFromLocal = (key) => {
+    for (let i = 0; i < cookies.length; i++) {
+        if (cookies[i][0] == key) {
+            return cookies[i][0];
+        }
+    }
+};
+let getCookie = (key, fromLocal = true) => {
+    if (fromLocal) {
+        return getCookiFromLocal(key);
+    }
     let val = `; ${document.cookie}`;
     let parts = val.split(`; ${key}=`)[1];
-    return parts.split(";")[0].trim();
+    console.log(parts.split(";")[0].trim());
+    return parts.split(" ")[0].trim();
 };
 let setCookie = (key, value) => {
     let cookie = ` ${key}=${value};`;
+    cookies.push([key, value]);
     document.cookie += cookie;
 };
 let getHWInfo = (isLogin = false) => {

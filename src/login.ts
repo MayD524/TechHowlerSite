@@ -9,6 +9,8 @@ let regState:boolean = false;
 
 // all that is needed just for logins
 
+let errorText = document.getElementById("errorText")!;
+
 let loginElms = [
     (document.getElementById("username_input")! as HTMLInputElement),
     (document.getElementById("password_input")! as HTMLInputElement)
@@ -16,7 +18,6 @@ let loginElms = [
 
 // stuff for creating a new account
 let registerElms = [
-    (document.getElementById("password_conf_input")! as HTMLInputElement),
     (document.getElementById("fullNameInput")! as HTMLInputElement),
     (document.getElementById("email_input")! as HTMLInputElement),
     (document.getElementById("studentID_input")! as HTMLInputElement),
@@ -73,7 +74,38 @@ let runRegister = () => {
         alert("Input " + anyEmpty.toString() + " was left empty.");
         return false;
     }
-    console.log(tmp);
+
+    // check password
+    if (isValidPassword(tmp[1].value) != 0) {
+        tmp[1].classList.add("inputFail");
+        errorText.innerText = "Password must be longer than 8 characters.";
+        return;
+    }
+
+    // check email
+    if (!isValidEmail(tmp[3].value)) {
+        tmp[3].classList.add("inputFail");
+        errorText.innerText = "Email is not a valid Excel Academy email.";
+        return;
+    }
+
+    // grade level
+    if (tmp[5].value != "staff") {
+        if (Number(tmp[6].value) > 12 || Number(tmp[5].value) < 5) {
+            tmp[5].classList.add("inputFail");
+            errorText.innerText = "The grade level given is not within 5th to 12th grade please try again.";
+            return;
+        }
+    } else {
+        tmp[5].value = "1000";
+    }
+
+    if (!tmp[2].value.includes(" ")) {
+        tmp[2].classList.add("inputFail");
+        errorText.innerText = "Please have a space between your first and last name. Thank you.";
+        return;
+    }
+
     register( 
         tmp[0].value,
         tmp[1].value,
@@ -81,7 +113,6 @@ let runRegister = () => {
         tmp[3].value,
         tmp[4].value,
         tmp[5].value,
-        tmp[6].value,
         loginSuccess
     );
 };

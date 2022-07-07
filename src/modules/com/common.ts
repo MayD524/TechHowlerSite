@@ -10,6 +10,13 @@ let clearInput = (elmId: string) => {
     (document.getElementById(elmId)! as HTMLInputElement).value = "";
 };
 
+let counter = (str:string) => {
+    return str.split('').reduce((total: { [key:string] : number }, letter:string) => {
+        total[letter] ? total[letter]++ : total[letter] = 1;
+        return total;
+    }, {});
+};
+
 let getInput = (elmId: string, clear:boolean=false, required:boolean=false) : string|boolean => {
     let elm:HTMLInputElement = (document.getElementById(elmId) as HTMLInputElement);
     assert(elm != null, 'Could not find element! ' + elmId)

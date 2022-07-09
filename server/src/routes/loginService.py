@@ -1,13 +1,4 @@
 
-from Crypto.Util.Padding import pad, unpad
-from Crypto.Cipher import AES
-import base64
-
-def decryptPassword(passw:str, key:str) -> str:
-    passw = base64.b64encode(passw)
-    cipher = AES.new(key.encode('utf-8'), AES.MODE_ECB)
-    return unpad(cipher.decrypt(passw), 16)
-
 def isValidUser(uname:str, passw:str, key:str, dbhandler) -> bool:
     dbhandler.move("users")
     whr = dbhandler.where(("username", uname))
@@ -19,18 +10,23 @@ def isValidUser(uname:str, passw:str, key:str, dbhandler) -> bool:
 
 if cookies == None:
     cookies = {}
-    
+
+Result = 500
+OutData = "LOGIN_FAILURE"
+
 uname = inputData['name']
-passw = inputData['password']
-key   = inputData['sessionID']
+if "password" in inputData:
+    passw = inputData['password']
+    if isValidUser(uname, passw, inputData['sessionID'], dbhandler):
+        Result  = 200
+        OutData = "LOGIN_SUCCESS;username=%s;session=%s" % (uname, inputData['sessionID'])
 
-if isValidUser(uname, passw, key, dbhandler):
-    Result  = 200
-    OutData = "LOGIN_SUCCESS;username=%s;session=%s" % (uname, key)
-
-    cookies['user'] = uname
-    cookies['key']  = key
-else:
-    Result = 500
-    OutData = "LOGIN_FAILURE"
+        sessionKeys[inputData['name']] = inputData['sessionID']
     
+else:
+    key   = inputData['sessionID']
+    if uname in sessionKeys and key == sessionKeys[uname]:
+        Result = 200
+        OutData = "LOGIN_SUCCESS;username=%s;session=%s" %(uname, key)
+    else:
+        OutData = "LOGIN_FAIL;invalidusername_sessionID"

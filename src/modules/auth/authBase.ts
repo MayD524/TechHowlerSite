@@ -8,6 +8,8 @@ let generateTempSessionKey = () => {
     return text;
 }
 let loggedIn = false;
+let isAuth   = false;
+
 let currentUser = '';
 let startTime = new Date().getTime();
 let sessionKey = generateTempSessionKey();
@@ -30,11 +32,20 @@ let login = (name: string, password: string, callback:any=null) => {
         callback = loginCallback
     }
     HTTPRequest('/api/login', HTTPMethods.POST, data, callback, generalErrorCallback);
+    authCheck(name, sessionKey);
 }
 
 let isValidEmail = (email:string) : boolean => {
     return email.includes("@excelacademy.org") || email.includes("@students.excelacademy.org");
-}
+};
+
+let authCheck = (username:string, ssid:string) => {
+    HTTPRequest("/api/dev/isauth", "GET", `${username};${ssid}`, (response: string) => {
+        isAuth = true;
+        let devSect = document.getElementById("dev-view")!;
+        devSect.innerHTML = response;
+    }, () => {});
+};
 
 let isValidPassword = (passW: string) : number => {
     /**
@@ -55,7 +66,6 @@ let isValidPassword = (passW: string) : number => {
 
     return ret;
 }
-
 
 let register = (username  : string,
                 password  : string,

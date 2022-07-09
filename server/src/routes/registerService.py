@@ -1,11 +1,4 @@
 import datetime
-def decryptPassword(passw:str, key:str) -> str:
-    from base64 import b64encode
-    from Crypto.Util.Padding import pad, unpad
-    from Crypto.Cipher import AES
-    passw = b64encode(passw.encode('utf-8'))
-    cipher = AES.new(key.encode('utf-8'), AES.MODE_ECB)
-    return unpad(cipher.decrypt(passw), 16)
 
 if cookies == None:
     cookies = {}
@@ -43,6 +36,7 @@ else:
     OutData = "ACCOUNT_CREATED"
     cookies['user'] = inputData['username']
     cookies['key']  = inputData['sessionID']
+    sessionKeys[inputData['username']] = inputData['sessionID']
 
-
+dbhandler._write()
 dbhandler.back()

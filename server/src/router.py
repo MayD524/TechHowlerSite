@@ -24,11 +24,12 @@ class route:
     handler:str         ## custom handler (can be none)
     authLevel:int       ## authentication level
     dbhandler:dbHandler ## just a local copy of dbHandler
+    router: any         ## the router 
     
     def __str__(self) -> str:
         return f"Routes:\nMethods : {self.methods}\nPath : {self.path}\nLogin : {self.requiresLogin}\nHandler : {self.handler}\nAuth Level : {self.authLevel}"
 
-    def invoke(self, cookies:dict, path:str, method:str, data:str=None) -> dict:
+    def invoke(self, cookies:dict, path:str, method:str, user:dict, data:str=None, sessionKeys:dict[str,str]=None) -> dict:
         """
             All routes which are invoked MUST
             have three variables. These should be found in
@@ -49,28 +50,39 @@ class route:
         
         """
         
+        if "?" in path:
+            path = path.rsplit("?", 1)[0]
+        
         code = self.handler
         if self.handler.endswith(".py"):
             assert os.path.exists(self.handler), "Handler does not exists %s for %s" % (self.handler, self.path)
             with open(self.handler, 'r') as reader:
                 code = reader.read()
         loc = {
-            'dbhandler' : self.dbhandler,
-            'inputData' : data,
-            'cookies'   : cookies,
-            'method'    : method,
-            'methods'   : self.methods,
-            'loginReq'  : self.requiresLogin,
-            'authLevel' : self.authLevel,
-            'path'      : self.path,
-            'GEN_TYPES' : ['text/html', 'text/javascript', 'text/css'],
-            'givenPath' : path,
-            'OutData'   : '',
-            'Result'    : 500
+            'sessionKeys': sessionKeys,
+            'dbhandler'  : self.dbhandler,
+            'userData'   : user,
+            'inputData'  : data,
+            'cookies'    : cookies,
+            'method'     : method,
+            'methods'    : self.methods,
+            'loginReq'   : self.requiresLogin,
+            'authLevel'  : self.authLevel,
+            'path'       : self.path,
+            'routes'     : router, ## just for dev tools but could be useful?
+            'GEN_TYPES'  : ['text/html', 'text/javascript', 'text/css'],
+            'givenPath'  : path,
+            'OutData'    : '',
+            'Result'     : 500
         }
-        
-        exec(code, globals(), loc)
-        
+        try:
+            exec(code, globals(), loc)
+        except Exception as e:
+            if self.handler.endswith(".py"):
+                print(f"File: {self.handler}")
+            print(f"Path: {path}")
+            print(e)
+            raise
         return loc
 
 class router:
@@ -97,7 +109,7 @@ class router:
     def __setup(self) -> None:
         dbRoutes = self.__dbhandler.getTable()
         for liRoute in dbRoutes['data']:
-            newRoute  = route(liRoute['methods'].split(","), liRoute['path'], True if liRoute['loginReq'] == '1' else False, liRoute['callback'], int(liRoute['AUTH_LEVEL']), self.__dbhandler)
+            newRoute  = route(liRoute['methods'].split(","), liRoute['path'], True if liRoute['loginReq'] == '1' else False, liRoute['callback'], int(liRoute['AUTH_LEVEL']), self.__dbhandler, self)
             self.routes.append(newRoute)
         
     def isValidMethod(self, method:str) -> bool:
@@ -128,14 +140,14 @@ class router:
     
     def newRoute(self, methods:list[str], path:str, author:str, handler:str=None, authLevel:int=AUTH_NONE, requiresLogin:bool=False) -> None:
         if not self.isValidRoute(methods, path):
-            self.routes.append(route(methods, path, True if requiresLogin or authLevel != 0 else False , handler, authLevel, self.__dbhandler))
+            self.routes.append(route(methods, path, True if requiresLogin or authLevel != 0 else False , handler, authLevel, self.__dbhandler, self))
             
             self.__dbhandler.insertAt({
                 "path"       : path,
                 "methods"    : ','.join(methods),
                 "callback"   : handler,
-                "AUTH_LEVEL" : str(authLevel),
+                "AUTH_LEVEL" : authLevel,
                 "author"     : author,
-                "loginReq"  : "1" if requiresLogin else "0"
+                "loginReq"  : 1 if requiresLogin else 0
             }, "routes")
             

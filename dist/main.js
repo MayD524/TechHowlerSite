@@ -23,7 +23,8 @@ class navbar {
             "Login": "#login-view",
             "Discussions": "#discussions-view",
             "Account": "#account-view",
-            "Learn more": "#about-view"
+            "Learn more": "#about-view",
+            "Dev": "#dev-view"
         };
         this.winMgr = winMgr;
         this.initNavbar();
@@ -69,6 +70,10 @@ class navbar {
             }
             let element = document.createElement('a');
             element.className = 'navbar-item nav-link text-center';
+            if (key == "Dev" && !isAuth)
+                element.style.display = 'none';
+            else
+                element.style.display = 'block';
             if (this.state == key) {
                 element.classList.add('active');
             }
@@ -120,6 +125,7 @@ let loginSuccess = (response) => {
         elm.innerText = '';
     });
     getAccountDetails(getCookie("username"));
+    loggedIn = true;
     alert("Logged in!");
 };
 let runLogin = () => {
@@ -167,7 +173,21 @@ let runRegister = () => {
 };
 if ('serviceWorker' in navigator) {
 }
+let getPostTest = (pth = "/api/getPost/1&10") => {
+    HTTPRequest(pth, "GET", "", (response) => {
+        console.log(JSON.parse(response));
+    }, generalErrorCallback);
+};
 let init = () => {
+    if (getCookie("username") && getCookie("session")) {
+        let data = {
+            name: getCookie("username"),
+            sessionID: getCookie("session"),
+            timeStart: startTime,
+            hwInfo: getHWInfo(true)
+        };
+        HTTPRequest("api/login", HTTPMethods.POST, data, loginSuccess, generalErrorCallback);
+    }
     var winMgr = new winManager();
     var nb = new navbar(winMgr);
     generateCalendar(today.getFullYear(), today.getMonth());
@@ -183,7 +203,8 @@ class winManager {
             "clubs-view": document.getElementById('clubs-view'),
             "login-view": document.getElementById('login-view'),
             "account-view": document.getElementById('account-view'),
-            "discussions-view": document.getElementById('discussions-view')
+            "discussions-view": document.getElementById('discussions-view'),
+            "dev-view": document.getElementById('dev-view')
         };
     }
     hidePages(allBut = "") {
@@ -214,6 +235,7 @@ let generateTempSessionKey = () => {
     return text;
 };
 let loggedIn = false;
+let isAuth = false;
 let currentUser = '';
 let startTime = new Date().getTime();
 let sessionKey = generateTempSessionKey();
@@ -233,9 +255,17 @@ let login = (name, password, callback = null) => {
         callback = loginCallback;
     }
     HTTPRequest('/api/login', HTTPMethods.POST, data, callback, generalErrorCallback);
+    authCheck(name, sessionKey);
 };
 let isValidEmail = (email) => {
     return email.includes("@excelacademy.org") || email.includes("@students.excelacademy.org");
+};
+let authCheck = (username, ssid) => {
+    HTTPRequest("/api/dev/isauth", "GET", `${username};${ssid}`, (response) => {
+        isAuth = true;
+        let devSect = document.getElementById("dev-view");
+        devSect.innerHTML = response;
+    }, () => { });
 };
 let isValidPassword = (passW) => {
     let ret = 0;
@@ -257,14 +287,6 @@ let register = (username, password, fullName, email, studentID, studentGR, callb
         fullName: fullName
     };
     HTTPRequest('/api/register', HTTPMethods.POST, data, callback, generalErrorCallback);
-};
-let encrypt = (text, key) => {
-    let cipher = CryptoJS.AES.encrypt(text, key);
-    return cipher.toString();
-};
-let decrypt = (text, key) => {
-    let cipher = CryptoJS.AES.decrypt(text, key);
-    return cipher.toString(CryptoJS.enc.Utf8);
 };
 const MIN_MONTH = 0;
 const MAX_MONTH = 11;
@@ -357,26 +379,26 @@ let anyInputEmpty = (elms) => {
     }
     return -1;
 };
-let cookies = [];
-let getCookiFromLocal = (key) => {
-    for (let i = 0; i < cookies.length; i++) {
-        if (cookies[i][0] == key) {
-            return cookies[i][0];
-        }
+let getCookie = (key) => {
+    let dCookies = document.cookie;
+    let parts = dCookies.split(" ");
+    for (let i = 0; i < parts.length; i++) {
+        let pair = parts[i].split("=");
+        if (pair[0] == key)
+            return pair[1];
     }
 };
-let getCookie = (key, fromLocal = true) => {
-    if (fromLocal) {
-        return getCookiFromLocal(key);
-    }
-    let val = `; ${document.cookie}`;
-    let parts = val.split(`; ${key}=`)[1];
-    console.log(parts.split(";")[0].trim());
-    return parts.split(" ")[0].trim();
+let removeCookie = (key) => {
+    let cookie = getCookie(key);
+    if (cookie === undefined)
+        return;
+    cookie = `${key}=${cookie}`;
+    document.cookie = document.cookie.replace(` ${cookie}`, "");
 };
 let setCookie = (key, value) => {
+    if (getCookie(key) != undefined)
+        return;
     let cookie = ` ${key}=${value};`;
-    cookies.push([key, value]);
     document.cookie += cookie;
 };
 let getHWInfo = (isLogin = false) => {
@@ -453,6 +475,25 @@ let HTTPRequest = (url = "", method = "GET", data, callback, errorCallback) => {
         success: callback,
         error: errorCallback
     });
+};
+let blogCreationSuccess = (response) => {
+    alert(response);
+};
+let blogCreationError = (response) => {
+    let blog = document.getElementById("blogData");
+    blog.value = "";
+    alert("Blog post created successfully!");
+};
+let createBlogPost = () => {
+    if (!loggedIn && getCookie("username") === undefined) {
+        alert("Error User must be logged in for this action!");
+        return;
+    }
+    let blogData = document.getElementById("blogData").value;
+    if (blogData === "") {
+        alert("You must type something.");
+    }
+    HTTPRequest("/api/post/blog", "POST", blogData, blogCreationSuccess, blogCreationError);
 };
 let grades = [
     "Freshman",

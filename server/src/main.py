@@ -62,13 +62,21 @@ class httpServer(SimpleHTTPRequestHandler):
         cookies = self.cookieJarHandler()
         
         path = parse.unquote_plus(self.path)
-        print(path)
+        user = {'authLevel': AUTH_NONE,
+                'username': 'noLogin_anon'}
+        if "username" in cookies:
+            user = _generalHandler.whereT("users", ("username", cookies['username']))
         route = _router.route("GET", path)
         if not route:
             self.ERROR("<h1>404</h1><p>Route %s does not exists or was not found.</p>" % path)
             return
         
-        ret = route.invoke(cookies, path, "GET", path)
+        if (route.authLevel > user["authLevel"]):
+            self.ERROR("User unauthorized to complete that action.")
+            return
+        
+        
+        ret = route.invoke(cookies, path, "GET", user, path)
         
         dType = ret['dType'] if 'dType' in ret else 'text/html'
         
@@ -86,12 +94,20 @@ class httpServer(SimpleHTTPRequestHandler):
 
         ## now to route
         route = _router.route("POST", path)
-        pprint.pprint(data)
+        user = {'authLevel': AUTH_NONE,
+                'username': 'noLogin_anon'}
+        if "username" in cookies:
+            user = _generalHandler.whereT("users", ("username", cookies['username']))
+        
         if not route:
             self.ERROR("<h1>404</h1><p>Route %s does not exist or was/is not accessible to your current user.")
             return
         
-        ret = route.invoke(cookies, path, "POST", data)
+        if (route.authLevel > user["authLevel"]):
+            self.ERROR("User unauthorized to complete that action.")
+            return
+        
+        ret = route.invoke(cookies, path, "POST", user, data, sessionKeys)
         MimeType = ret['dType'] if 'dType' in ret else 'text/html'
         
         self.set_headers(ret['Result'], MimeType, ret['cookies'])
@@ -116,7 +132,7 @@ def loggingSetup(   level:int=logging.INFO,
 
 def setRoutes() -> None:
     _router.newRoute(["GET", "POST", "PUT"] , "/"             , "May", "routes/index.py"   , AUTH_NONE, False)
-    _router.newRoute(["GET"]                , "/sw.js"        , "May", "routes/sw.py"       , AUTH_NONE, False)
+    _router.newRoute(["GET"]                , "/sw.js"        , "May", "routes/sw.py"      , AUTH_NONE, False)
     _router.newRoute(["GET", "POST", "PUT"] , "/html"         , "May", "routes/index.py"   , AUTH_NONE, False)
     _router.newRoute(["GET"]                , "/favicon.ico"  , "May", 'routes/favicon.py'                   )
     _router.newRoute(['GET']                , '/dist/*'       , "May", 'routes/getJS.py'                     )
@@ -125,8 +141,11 @@ def setRoutes() -> None:
     _router.newRoute(["GET"]                , "/resources/*"  , "May", 'routes/resourceHandler.py'           )
     _router.newRoute(["POST"]               , "/api/register" , "May", 'routes/registerService.py'           )
     _router.newRoute(["GET"]                , "/api/test"     , "May", 'routes/test.py'                      )
-    _router.newRoute(["POST"]               , "/api/makePost" , "May", 'routes/makePost.py' , AUTH_LOW, True )
+    _router.newRoute(["GET"]                , "/api/getPost/*", "May", 'routes/getPost.py'                   )
+    _router.newRoute(["POST"]               , "/api/post/*"   , "May", 'routes/post.py'     , AUTH_LOW, True )
     _router.newRoute(["POST", "GET"]        , "/api/users/*"  , "May", 'routes/user.py'     , AUTH_LOW, True )
+    _router.newRoute(["POST", "GET"]        , "/api/dev/*"    , "May", 'routes/devops.py'   , AUTH_DEV, True )
+    
     _generalHandler.move("")
     _generalHandler.newTable("users", {
         "ID"       : "INCREMENTED",
@@ -147,11 +166,13 @@ def setRoutes() -> None:
 
     _generalHandler.newTable("post", {
         "ID"        : "INCREMENTED", ## id of the post
+        "UUID"      : "str",
         "author"    : "str",         ## author of the post
-        "postDate"  : "int",         ## when was the post made
+        "postDate"  : "str",         ## when was the post made
         "message"   : "str",         ## the post data (what the message says)
         "likes"     : "int",         ## how popular is this post?
-        "parent"    : "int",         ## is this a comment? if so this should be >-1 or null
+        "parent"    : "str",         ## is this a comment? if so this should be >-1 or null
+        "resources" : "str",         ## any images that were uploaded along with it.
         "form"      : "str",         ## what form does this post belong to
     })
     
@@ -189,6 +210,7 @@ def runServer(host:str="localhost", port:int=8080, _handler:dbHandler=None, _rou
     
     serverAddress = (host, port)
     httpd = ThreadingHTTPServer(serverAddress, httpServer)
+    # stuff for https (might do later or off script)
     #httpd.socket = ssl.wrap_socket(httpd.socket,
     #                                server_side=True,
     #                                certfile='data/techhowler.pem',
@@ -211,6 +233,8 @@ def runServer(host:str="localhost", port:int=8080, _handler:dbHandler=None, _rou
 assert __name__ == "__main__", "ImportError -> This file is not supposed to be imported!"
 
 _firstBoot:bool = True
+
+sessionKeys:dict[str,str] = {}
 
 _generalHandler = dbHandler("./database/server.db")
 _router         = router(_generalHandler)

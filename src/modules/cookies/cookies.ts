@@ -1,32 +1,27 @@
-/**
- * TODO: FIXMEEE
- *  I am far too tired to fix cookies = broken plz fix future
- *  May <3 - Past May :P
- * 
- */
 
-let cookies:string[][] = [];
 
-let getCookiFromLocal = (key: string) : any => {
-    for(let i = 0; i < cookies.length; i++) {
-        if (cookies[i][0] == key) {
-            return cookies[i][0]
-        }
+let getCookie = (key: string) : any => {
+    let dCookies = document.cookie;
+    let parts:string[] = dCookies.split(" ");
+    for (let i = 0; i < parts.length; i++) {
+        let pair = parts[i].split("=");
+        if (pair[0] == key)
+            return pair[1];
     }
 };
 
-let getCookie = (key: string, fromLocal:boolean=true) : any => {
-    if (fromLocal) {
-        return getCookiFromLocal(key);
-    }
-    let val = `; ${document.cookie}`;
-    let parts = val.split(`; ${key}=`)[1];
-    console.log(parts.split(";")[0].trim());
-    return parts.split(" ")[0].trim();
+let removeCookie = (key: string) : void => {
+    let cookie = getCookie(key);
+    if (cookie === undefined)
+        return; // cookie doesn't exist;
+    
+    cookie = `${key}=${cookie}`;
+    document.cookie = document.cookie.replace(` ${cookie}`, "");
 };
 
 let setCookie = (key: string, value: string) : void => {
+    if (getCookie(key) != undefined)
+        return;
     let cookie = ` ${key}=${value};` 
-    cookies.push([key,value]);
     document.cookie += cookie;
 };

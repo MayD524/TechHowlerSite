@@ -24,7 +24,8 @@ class winManager {
             "clubs-view": document.getElementById('clubs-view'),
             "login-view": document.getElementById('login-view'),
             "account-view": document.getElementById('account-view'),
-            "discussions-view": document.getElementById('discussions-view')
+            "discussions-view": document.getElementById('discussions-view'),
+            "dev-view" : document.getElementById('dev-view')
         };
     }
 

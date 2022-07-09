@@ -14,149 +14,138 @@
                 "path": "/",
                 "methods": "GET,POST,PUT",
                 "callback": "./routes/index.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "1"
+                "loginReq": 0,
+                "ID": 1
             },
             {
                 "path": "/favicon.ico",
                 "methods": "GET",
                 "callback": "routes/favicon.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "2"
+                "loginReq": 0,
+                "ID": 2
             },
             {
                 "path": "/dist/*",
                 "methods": "GET",
                 "callback": "routes/getJS.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "3"
+                "loginReq": 0,
+                "ID": 3
             },
             {
                 "path": "/style/*",
                 "methods": "GET",
                 "callback": "routes/genCss.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "4"
+                "loginReq": 0,
+                "ID": 4
             },
             {
                 "path": "/api/login",
                 "methods": "POST",
                 "callback": "routes/loginService.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "5"
+                "loginReq": 0,
+                "ID": 5
             },
             {
                 "path": "/resources/*",
                 "methods": "GET",
                 "callback": "routes/resourceHandler.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "6"
+                "loginReq": 0,
+                "ID": 6
             },
             {
                 "path": "/api/register",
                 "methods": "POST",
                 "callback": "routes/registerService.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
-                "ID": "7"
+                "loginReq": 0,
+                "ID": 7
             },
             {
                 "path": "/api/makePost",
                 "methods": "POST",
                 "callback": "routes/makePost.py",
-                "AUTH_LEVEL": "1",
+                "AUTH_LEVEL": 1,
                 "author": "May",
-                "loginReq": "1",
-                "ID": "8"
+                "loginReq": 1,
+                "ID": 8
             },
             {
                 "path": "/api/users/*",
                 "methods": "POST,GET",
                 "callback": "routes/user.py",
-                "AUTH_LEVEL": "1",
+                "AUTH_LEVEL": 1,
                 "author": "May",
-                "loginReq": "1",
-                "ID": "9"
+                "loginReq": 1,
+                "ID": 9
             },
             {
                 "path": "/html",
                 "methods": "GET,POST,PUT",
                 "callback": "routes/index.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
+                "loginReq": 0,
                 "ID": 10
             },
             {
                 "path": "/sw.js",
                 "methods": "GET",
                 "callback": "routes/sw.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
+                "loginReq": 0,
                 "ID": 11
             },
             {
                 "path": "/api/test",
                 "methods": "GET",
                 "callback": "routes/test.py",
-                "AUTH_LEVEL": "0",
+                "AUTH_LEVEL": 0,
                 "author": "May",
-                "loginReq": "0",
+                "loginReq": 0,
                 "ID": 12
+            },
+            {
+                "path": "/api/getPost/*",
+                "methods": "GET",
+                "callback": "routes/getPost.py",
+                "AUTH_LEVEL": 0,
+                "author": "May",
+                "loginReq": 0,
+                "ID": 13
+            },
+            {
+                "path": "/api/post/*",
+                "methods": "POST",
+                "callback": "routes/post.py",
+                "AUTH_LEVEL": 1,
+                "author": "May",
+                "loginReq": 1,
+                "ID": 14
+            },
+            {
+                "path": "/api/dev/*",
+                "methods": "POST,GET",
+                "callback": "routes/devops.py",
+                "AUTH_LEVEL": 4,
+                "author": "May",
+                "loginReq": 1,
+                "ID": 15
             }
         ]
-    },
-    "post": {
-        "scheme": {
-            "ID": "INCREMENTED",
-            "author": "str",
-            "postDate": "int",
-            "message": "str",
-            "likes": "int",
-            "parent": "int",
-            "form": "str"
-        },
-        "data": []
-    },
-    "events": {
-        "scheme": {
-            "ID": "INCREMENTED",
-            "author": "str",
-            "eventStart": "int",
-            "eventEnd": "int",
-            "eventName": "str",
-            "eventCapacity": "int",
-            "eventLocation": "str"
-        },
-        "data": []
-    },
-    "clubs": {
-        "scheme": {
-            "ID": "INCREMENTED",
-            "infinityStatus": "int",
-            "leader": "str",
-            "advisor": "str",
-            "clubName": "str",
-            "members": "str",
-            "meetingDate": "str",
-            "meetingTime": "int",
-            "roomNum": "int"
-        },
-        "data": []
     },
     "users": {
         "scheme": {
@@ -190,7 +179,7 @@
                 "status": "",
                 "warns": 0,
                 "accCreate": "Friday - 5 - 23:42:48 -  Jul/01/2022",
-                "ID": "1"
+                "ID": 1
             },
             {
                 "username": "Sisyphus",
@@ -206,8 +195,82 @@
                 "status": "",
                 "warns": 0,
                 "accCreate": "Saturday - 2 - 20:48:48 -  Jul/02/2022",
-                "ID": "0"
+                "ID": 0
             }
         ]
+    },
+    "post": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "UUID": "str",
+            "author": "str",
+            "postDate": "str",
+            "message": "str",
+            "likes": "int",
+            "parent": "str",
+            "resources": "str",
+            "form": "str"
+        },
+        "data": [
+            {
+                "UUID": "9006df85-0df1-48b3-a3c0-caf7de9cc37b",
+                "author": "may",
+                "postDate": "Saturday - 6 - 00:14:12 -  Jul/09/2022",
+                "message": "gg",
+                "likes": 0,
+                "resources": "",
+                "parent": "",
+                "form": "*",
+                "ID": 1
+            },
+            {
+                "UUID": "48b274f8-fc15-4aa6-95f0-719a60983512",
+                "author": "may",
+                "postDate": "Saturday - 6 - 00:14:52 -  Jul/09/2022",
+                "message": "hhhh",
+                "likes": 0,
+                "resources": "",
+                "parent": "",
+                "form": "*",
+                "ID": 2
+            },
+            {
+                "UUID": "b5ee852a-3801-4c8d-8e94-9c099c283671",
+                "author": "may",
+                "postDate": "Saturday - 6 - 00:14:58 -  Jul/09/2022",
+                "message": "hello there!",
+                "likes": 0,
+                "resources": "",
+                "parent": "",
+                "form": "*",
+                "ID": 3
+            }
+        ]
+    },
+    "events": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "author": "str",
+            "eventStart": "int",
+            "eventEnd": "int",
+            "eventName": "str",
+            "eventCapacity": "int",
+            "eventLocation": "str"
+        },
+        "data": []
+    },
+    "clubs": {
+        "scheme": {
+            "ID": "INCREMENTED",
+            "infinityStatus": "int",
+            "leader": "str",
+            "advisor": "str",
+            "clubName": "str",
+            "members": "str",
+            "meetingDate": "str",
+            "meetingTime": "int",
+            "roomNum": "int"
+        },
+        "data": []
     }
 }

@@ -49,9 +49,9 @@ let loginSuccess = (response: string) => {
         elm.innerText = '';
     });
     getAccountDetails(getCookie("username"));
+    loggedIn = true;
     alert("Logged in!");
 };
-
 
 let runLogin = () => {
     // in the future we can do some fancy css

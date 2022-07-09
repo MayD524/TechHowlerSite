@@ -9,8 +9,25 @@ if ('serviceWorker' in navigator){
     //});
 }
 
+let getPostTest = (pth: string="/api/getPost/1&10") => {
+    HTTPRequest(pth, "GET", "", (response: string) => {
+        console.log(JSON.parse(response));
+    }, generalErrorCallback);
+};
 
 let init = () => {
+
+    if (getCookie("username") && getCookie("session")) {
+        // login with cookies
+        let data = {
+            name        : getCookie("username"),
+            sessionID   : getCookie("session"),
+            timeStart   : startTime,
+            hwInfo      : getHWInfo(true)
+        };
+        HTTPRequest("api/login", HTTPMethods.POST, data, loginSuccess, generalErrorCallback);
+    }
+
     var winMgr = new winManager();
     var nb = new navbar(winMgr);
     generateCalendar(today.getFullYear(), today.getMonth());

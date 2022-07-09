@@ -123,11 +123,31 @@ class dbHandler:
             
         return -1
     
+    def allInRange(self, table:str, idRangeStart:int, idRangeStop:int) -> list[dict]|bool:
+        if not self._exists(table):
+            return False
+    
+        self.move(table)
+        ret = []
+        for i in range(idRangeStart, idRangeStop):
+            ret = self.where(("ID", i))
+    
+        self.back()
+        return ret
+    
     def where(self, lookFor:tuple) -> dict|bool:
         ind = self.indexOf(lookFor)
         if ind == -1:
             return False
         return self.data[self.cursor.currentTable]['data'][ind]
+    
+    def whereT(self, table:str, lookFor:tuple) -> dict|bool:
+        if not self._exists(table):
+            return False
+        self.move(table)
+        dt = self.where(lookFor)
+        self.back()
+        return dt
     
     def get(self, index:int) -> dict|bool:
         if len(self.data[self.cursor.currentTable]['data']) > index:
@@ -154,6 +174,7 @@ class dbHandler:
             if len(tmpDict['data']) > 0:
                 inc = int(tmpDict['data'][-1]['ID'])
             data['ID'] = inc + 1
+
         assert self.__checkEqual(list(data.keys()), list(tmpDict['scheme'].keys())), f"The data given does not match the scheme of table '{self.cursor.currentTable}'"
         
         for key in data.keys():

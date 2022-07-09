@@ -19,7 +19,8 @@ class navbar {
             "Login"         : "#login-view",
             "Discussions"   : "#discussions-view",
             "Account"       : "#account-view",
-            "Learn more"    : "#about-view"
+            "Learn more"    : "#about-view",
+            "Dev"           : "#dev-view"
         };
 
         this.winMgr = winMgr;
@@ -70,6 +71,11 @@ class navbar {
             let element = document.createElement('a');
             element.className = 'navbar-item nav-link text-center';
             
+            if (key == "Dev" && !isAuth)
+                element.style.display = 'none';
+            else
+                element.style.display = 'block';
+
             // check if the current state is the same as the element
             if (this.state == key) {
                 element.classList.add('active');

@@ -94,7 +94,7 @@
 
             <div class="row offset-md-12" id="blog-view" style="display:none;">
                 <div id="createBlog">
-                    <button id="blogUploadPicture" class="btn btn-outline-info">Upload</button>
+                    <button id="blogUploadPicture" class="btn btn-outline-info" onclick="createBlogPost()">Upload</button>
                     <textarea id="blogData" class="text-secondary" placeholder="Blog stuff here..."></textarea>
                 </div>
             </div>
@@ -304,9 +304,8 @@
                         runLogin();
                 " id="theLoginButton">Login!</button>
             </div>
-            <div class="row offset-md-2" id="account-view" style="display:none;">
-                
-            </div>
+            <div class="row offset-md-2" id="account-view" style="display:none;"></div>
+            <div class="row offset-md-2" id="dev-view" style="display:none;"></div>
         </div>
     </body>
     <!-- This is our compiled typescript -->

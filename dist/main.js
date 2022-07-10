@@ -173,11 +173,6 @@ let runRegister = () => {
 };
 if ('serviceWorker' in navigator) {
 }
-let getPostTest = (pth = "/api/getPost/1&10") => {
-    HTTPRequest(pth, "GET", "", (response) => {
-        console.log(JSON.parse(response));
-    }, generalErrorCallback);
-};
 let init = () => {
     if (getCookie("username") && getCookie("session")) {
         let data = {
@@ -191,6 +186,7 @@ let init = () => {
     var winMgr = new winManager();
     var nb = new navbar(winMgr);
     generateCalendar(today.getFullYear(), today.getMonth());
+    getBlogs(0, 10);
 };
 class winManager {
     constructor() {
@@ -475,6 +471,72 @@ let HTTPRequest = (url = "", method = "GET", data, callback, errorCallback) => {
         success: callback,
         error: errorCallback
     });
+};
+let blogCacheObject = {
+    UUID: "N/A",
+    author: "N/A",
+    form: "N/A",
+    likes: 0,
+    message: "N/A",
+    parent: "N/A",
+    postDate: "N/A",
+    resources: "N/A",
+    ID: 0
+};
+let blogEnableState = false;
+let blogCache = [];
+let activeElms = [];
+let getBlogs = (start, end) => {
+    let lastElm = blogCache[blogCache.length];
+    if (start > end) {
+        let tmp = start;
+        start = end;
+        end = tmp;
+    }
+    if (lastElm != undefined) {
+        if (lastElm.ID > end)
+            return;
+        else if (lastElm.ID > start)
+            start = lastElm.ID;
+    }
+    HTTPRequest(`/api/getPost/${start}&${end}`, HTTPMethods.GET, "", (response) => {
+        let obj = JSON.parse(response);
+        let display = document.getElementById("blogDisplay");
+        display.innerHTML = '';
+        for (let i = 0; i < obj.length; i++) {
+            if (blogCache.includes(obj[i]))
+                continue;
+            blogCache.push(obj[i]);
+            let elm = document.createElement("div");
+            elm.id = obj[i].UUID;
+            elm.classList.add("blogPost");
+            elm.innerHTML = `
+                            <div class="blogPostHeader">
+                                <span class="blogAuthorName">Author: ${obj[i].author}</span>
+                                <span class="float-right blogPostDate">${obj[i].postDate}</span>
+                            </div>
+                            <div class="blogPostBody">
+                                ${obj[i].message}
+                            </div>
+                        `;
+            elm.onclick = () => {
+                let cur = elm;
+                if (activeElms.includes(obj[i].UUID)) {
+                    cur.style.height = "150px";
+                    cur.style.webkitMaskImage = "linear-gradient(180deg, #000 60%, transparent)";
+                    cur.style.overflow = "hidden";
+                    activeElms.splice(activeElms.indexOf(obj[i].UUID));
+                }
+                else {
+                    cur.style.height = "600px";
+                    cur.style.overflow = "scroll";
+                    cur.style.webkitMaskImage = "";
+                    activeElms.push(obj[i].UUID);
+                }
+            };
+            display.appendChild(elm);
+        }
+    }, generalErrorCallback);
 };
 let blogCreationSuccess = (response) => {
     alert(response);

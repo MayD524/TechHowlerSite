@@ -1,10 +1,10 @@
 from datetime import datetime
+import markdown
 import uuid
 
 topic = path.replace("/api/post/", "")
 
 ## blog should require higher auth than general posting
-authLevel = authLevel if topic != "blog" else authLevel + 1
 
 print(cookies)
 if "username" in cookies.keys():
@@ -22,7 +22,7 @@ if "username" in cookies.keys():
                 "UUID"     : str(uuid.uuid4()),
                 "author"   : user["username"],
                 "postDate" : datetime.now().strftime("%A - %w - %H:%M:%S - %Z %b/%d/%Y"),
-                "message"  : inputData,
+                "message"  : markdown.markdown(inputData).replace("\n", "<br>"),
                 "likes"    : 0,
                 "resources": "",
                 "parent"   : "",

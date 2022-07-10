@@ -7,6 +7,7 @@
         <meta name="theme-color" content="#4dbaa8">
         <title>Home</title>
         <link rel="manifest" href="resources/manifest.json">
+        <link rel="stylesheet" href="style/blog.css">
         <link rel="stylesheet" href="style/style.css">
         <link rel="stylesheet" href="style/overlay.css">
         <link rel="stylesheet" href="style/calendar.css">
@@ -93,7 +94,28 @@
             </div>
 
             <div class="row offset-md-12" id="blog-view" style="display:none;">
-                <div id="createBlog">
+                <div class="float-right">
+                    <button class="btn btn-outline-info" id="blogBtn" onclick="
+                        blogEnableState = !blogEnableState;
+                        let selfObj = document.getElementById('blogBtn');
+                        let display = document.getElementById('blogDisplay');
+                        let post    = document.getElementById('createBlog');
+                        if (blogEnableState) {
+                            selfObj.innerText = 'Read Blogs';
+                            post.style.display = 'block';
+                            display.style.display = 'none';
+                        } else {
+                            selfObj.innerText = 'Create Blog';
+                            post.style.display = 'none';
+                            display.style.display = 'block';
+                        }
+                        getBlogs(0, 10);
+                    ">
+                        Create Blog
+                    </button>
+                </div>
+                <div id="blogDisplay" style="padding:40px;">No blogs</div>
+                <div id="createBlog" style="display:none;">
                     <button id="blogUploadPicture" class="btn btn-outline-info" onclick="createBlogPost()">Upload</button>
                     <textarea id="blogData" class="text-secondary" placeholder="Blog stuff here..."></textarea>
                 </div>

@@ -9,14 +9,7 @@ if ('serviceWorker' in navigator){
     //});
 }
 
-let getPostTest = (pth: string="/api/getPost/1&10") => {
-    HTTPRequest(pth, "GET", "", (response: string) => {
-        console.log(JSON.parse(response));
-    }, generalErrorCallback);
-};
-
 let init = () => {
-
     if (getCookie("username") && getCookie("session")) {
         // login with cookies
         let data = {
@@ -31,4 +24,5 @@ let init = () => {
     var winMgr = new winManager();
     var nb = new navbar(winMgr);
     generateCalendar(today.getFullYear(), today.getMonth());
+    getBlogs(0, 10);
 };

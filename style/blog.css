@@ -1,0 +1,25 @@
+.blogPost {
+    height: 150px;
+    border-bottom: 2px solid lightgrey;
+    padding-top: 10px;
+    overflow:hidden;
+    -webkit-mask-image : linear-gradient(180deg, #000 60%, transparent);
+    transition: all .5s linear;
+}
+
+.blogPost .blogPostHeader {
+}
+
+.blogPost .blogPostHeader .blogAuthorName {
+    font-size: 20px;
+}
+
+.blogPost .blogPostHeader .blogPostDate {
+    font-size: 14px;
+    font-weight: lighter;
+    color: grey;
+}
+
+.blogPost .blogPostBody {
+   
+}

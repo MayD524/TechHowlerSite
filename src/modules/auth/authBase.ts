@@ -6,7 +6,7 @@ let generateTempSessionKey = () => {
     }
     text += new Date().getTime();
     return text;
-}
+};
 let loggedIn = false;
 let isAuth   = false;
 

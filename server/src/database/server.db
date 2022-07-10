@@ -131,7 +131,7 @@
                 "path": "/api/post/*",
                 "methods": "POST",
                 "callback": "routes/post.py",
-                "AUTH_LEVEL": 1,
+                "AUTH_LEVEL": 2,
                 "author": "May",
                 "loginReq": 1,
                 "ID": 14
@@ -172,7 +172,7 @@
                 "firstName": "May",
                 "lastName": "D",
                 "grade": 12,
-                "authLevel": 1,
+                "authLevel": 4,
                 "email": "test@gmail.com",
                 "about": "New user say hi!",
                 "pfp": "",
@@ -213,10 +213,10 @@
         },
         "data": [
             {
-                "UUID": "9006df85-0df1-48b3-a3c0-caf7de9cc37b",
+                "UUID": "801319ab-1fc5-4067-960e-a43fd77086fe",
                 "author": "may",
-                "postDate": "Saturday - 6 - 00:14:12 -  Jul/09/2022",
-                "message": "gg",
+                "postDate": "Saturday - 6 - 23:37:05 -  Jul/09/2022",
+                "message": "<h2>Hello there!</h2><br><p>This is a test ~~blog post~~ so lets see how well the MarkDown works<br><strong>markdown!</strong> <em>markdown?</em> ;fjnlskdjfg;lksjdk;ljfgjnsdf<br>ggsdflkgjslkdfjgs<br>dfgkjsdfg;ljsdfg<br>sdkflgj;sldfjgsd<br>fg<br>splkdfgj'sdfg<br>;lkjsd;lfg<br>skdfjg<br>lsjdf<br>gl;js<br>;dfgs;ldfjg;sjdf;glsd;fjg;lksdfg</p>",
                 "likes": 0,
                 "resources": "",
                 "parent": "",
@@ -224,26 +224,15 @@
                 "ID": 1
             },
             {
-                "UUID": "48b274f8-fc15-4aa6-95f0-719a60983512",
+                "UUID": "6516cfbe-5669-4b1c-a8f5-5b4520a22b8f",
                 "author": "may",
-                "postDate": "Saturday - 6 - 00:14:52 -  Jul/09/2022",
-                "message": "hhhh",
+                "postDate": "Saturday - 6 - 23:47:46 -  Jul/09/2022",
+                "message": "<h2>Hello there!</h2><br><p>This is a test ~~blog post~~ so lets see how well the MarkDown works<br><strong>markdown!</strong> <em>markdown?</em> ;fjnlskdjfg;lksjdk;ljfgjnsdf<br>ggsdflkgjslkdfjgs<br>dfgkjsdfg;ljsdfg<br>sdkflgj;sldfjgsd<br>fg<br>splkdfgj'sdfg<br>;lkjsd;lfg<br>skdfjg<br>lsjdf<br>gl;js<br>;dfgs;ldfjg;sjdf;glsd;fjg;lksdfg</p>",
                 "likes": 0,
                 "resources": "",
                 "parent": "",
                 "form": "*",
                 "ID": 2
-            },
-            {
-                "UUID": "b5ee852a-3801-4c8d-8e94-9c099c283671",
-                "author": "may",
-                "postDate": "Saturday - 6 - 00:14:58 -  Jul/09/2022",
-                "message": "hello there!",
-                "likes": 0,
-                "resources": "",
-                "parent": "",
-                "form": "*",
-                "ID": 3
             }
         ]
     },

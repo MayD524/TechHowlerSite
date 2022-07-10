@@ -1,5 +1,5 @@
 import json
-
+print()
 initRoute = "/api/getPost/"
 req = givenPath.replace(initRoute, '')
 
@@ -8,16 +8,16 @@ reqMin, reqMax = req.split("&")
 try:
     reqMin, reqMax = int(reqMin), int(reqMax)
     dbhandler.move("post")
-    dbt = dbhandler.getTable()
+    dbt = dbhandler.getTable().copy()
+    
+    dbt = dbt['data'][::-1]
+    print(dbt)
     dt = []
-    
-    for lb in dbt['data']:
-        if lb['ID'] <= reqMax and lb['ID'] > reqMin:
-            dt.append(lb)
-        elif lb['ID'] > reqMax:
+    for x in range(reqMin, reqMax):
+        if x >= len(dbt):
             break
-        
-    
+        dt.append(dbt[x])
+
     Result = 200
     OutData = json.dumps(dt)
     

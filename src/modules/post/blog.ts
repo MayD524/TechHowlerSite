@@ -53,7 +53,9 @@ let getBlogs = (start:number, end:number) => {
                             continue;
                         blogCache.push(obj[i]);
                         let elm = document.createElement("div");
-                        elm.id = obj[i].UUID;
+                        let buttons = document.createElement("div");
+                        buttons.classList.add("blogPostButtons");
+                        elm.id = 'bl'+obj[i].UUID;
                         elm.classList.add("blogPost");
                         elm.innerHTML = `
                             <div class="blogPostHeader">
@@ -64,25 +66,53 @@ let getBlogs = (start:number, end:number) => {
                                 ${obj[i].message}
                             </div>
                         `
-                        elm.onclick = () => {
-                            let cur = elm;
-                            if (activeElms.includes(obj[i].UUID)) {
+                        buttons.innerHTML = `
+                            <div class="container">
+                                <div class="row">
+                                <div class="col-sm blogButton" onclick="blogRead('bl${obj[i].UUID}')" id="bl${obj[i].UUID}_read">Read</div> 
+                                    <div class="col-sm blogButton" onclick="blogAction('likes', 'bl${obj[i].UUID}')" id="bl${obj[i].UUID}_likes">like</div>
+                                    <div class="col-sm blogButton" onclick="blogAction('comment', 'bl${obj[i].UUID}')" id="bl${obj[i].UUID}_comment">comment</div>
+                                </div>
+                            </div>
+                        `
+                    
+
+                        display.appendChild(elm);
+                        display.appendChild(buttons);
+                    }
+                }, generalErrorCallback);
+};
+/**
+ * if (activeElms.includes(obj[i].UUID)) {
                                 cur.style.height = "150px";
                                 cur.style.webkitMaskImage = "linear-gradient(180deg, #000 60%, transparent)";
                                 cur.style.overflow = "hidden";
                                 activeElms.splice(activeElms.indexOf(obj[i].UUID))
-                            } else {
-                                cur.style.height = "600px";
-                                cur.style.overflow = "scroll";
-                                cur.style.webkitMaskImage = "";
-                                activeElms.push(obj[i].UUID);
-                                
                             }
-                        };
-                        display.appendChild(elm);
-                    }
-                }, generalErrorCallback);
+ */
+
+let blogRead = (uid: string) => {
+    let cur = document.getElementById(uid)!;
+    let btn = document.getElementById(uid + "_read")!;
+    if (activeElms.includes(uid)) {
+        cur.style.height = "150px";
+        cur.style.webkitMaskImage = "linear-gradient(180deg, #000 60%, transparent)";
+        cur.style.overflow = "hidden";
+        btn.innerText = "Read";
+        activeElms.splice(activeElms.indexOf(uid))
+    } else {
+        cur.style.height = "600px";
+        cur.style.overflow = "scroll";
+        cur.style.webkitMaskImage = "";
+        btn.innerText = "Close";
+        activeElms.push(uid);
+    }
 };
+
+let blogAction = (act:string, uid:string) => {
+    console.log(`${act} - ${uid}`);
+};
+
 
 let blogCreationSuccess = (response: any) => {
     alert(response);

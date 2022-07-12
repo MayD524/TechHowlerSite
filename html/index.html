@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<!--
+    Hello there!
+    Yes you reading this! This is a comment don't worry no one else
+    can see this. You've decided to look through the code of our website?
+    
+    1. Thats cool! If you wish to learn more come to tech team! We'd love to have
+    you there
+
+    2. Good luck on reading this. Sorry my code habbits are all over the place :/
+
+    But look at you! Reading this far! Are you trying to find the easter eggs?
+    Ah thats what you're doing. Well I won't give you any clues besides this is
+    a little project of mine to hide a few little goodies for you to get through
+    the day. Now either share this with friends or don't and keep all the fun for yourself.
+
+    Good luck on your hunt through highschool!
+
+    - Original Developer May
+    - If you are here in 2022-2023 come find me and tell me what you think!
+-->
 <html>
     <head>
         <meta charset="utf-8">
@@ -9,6 +29,7 @@
         <link rel="manifest" href="resources/manifest.json">
         <link rel="stylesheet" href="style/blog.css">
         <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/error.css">
         <link rel="stylesheet" href="style/overlay.css">
         <link rel="stylesheet" href="style/calendar.css">
         <!-- Download bootstrap -->
@@ -30,6 +51,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="leftOverlay" id="alertOverlay">
             </div>
             <button onclick="
                 document.getElementById('overlay').style.display = 'block';
@@ -183,10 +206,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="card" style="width:18rem;">
+                            <img class="card-img-top" src="resources/big-bird-door.gif" alt="Card Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">Some club</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Advisor: someone</h6>
+                                <p class="card-text">About the club</p>
+                                <button class="btn btn-info">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="row offset-md-12" id="discussions-view" style="display:none;">
             </div>
 
             <div class="row offset-md-12" id="about-view" style="display:none;">

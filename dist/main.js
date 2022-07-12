@@ -21,7 +21,6 @@ class navbar {
             "Blog": "#blog-view",
             "Clubs": "#clubs-view",
             "Login": "#login-view",
-            "Discussions": "#discussions-view",
             "Account": "#account-view",
             "Learn more": "#about-view",
             "Dev": "#dev-view"
@@ -199,7 +198,6 @@ class winManager {
             "clubs-view": document.getElementById('clubs-view'),
             "login-view": document.getElementById('login-view'),
             "account-view": document.getElementById('account-view'),
-            "discussions-view": document.getElementById('discussions-view'),
             "dev-view": document.getElementById('dev-view')
         };
     }
@@ -397,6 +395,19 @@ let setCookie = (key, value) => {
     let cookie = ` ${key}=${value};`;
     document.cookie += cookie;
 };
+let alertSpace = document.getElementById("alertOverlay");
+let alerts = [];
+let alert = (input, isError = false) => {
+    let aDiv = document.createElement('div');
+    aDiv.classList.add(isError ? "error" : "success");
+    aDiv.classList.add("overlayBlob");
+    aDiv.innerText = input;
+    setTimeout(() => {
+        alertSpace.removeChild(aDiv);
+    }, 6000);
+    alertSpace.appendChild(aDiv);
+    alerts.push(aDiv);
+};
 let getHWInfo = (isLogin = false) => {
     let answer = true;
     if (!isLogin) {
@@ -508,7 +519,9 @@ let getBlogs = (start, end) => {
                 continue;
             blogCache.push(obj[i]);
             let elm = document.createElement("div");
-            elm.id = obj[i].UUID;
+            let buttons = document.createElement("div");
+            buttons.classList.add("blogPostButtons");
+            elm.id = 'bl' + obj[i].UUID;
             elm.classList.add("blogPost");
             elm.innerHTML = `
                             <div class="blogPostHeader">
@@ -519,24 +532,40 @@ let getBlogs = (start, end) => {
                                 ${obj[i].message}
                             </div>
                         `;
-            elm.onclick = () => {
-                let cur = elm;
-                if (activeElms.includes(obj[i].UUID)) {
-                    cur.style.height = "150px";
-                    cur.style.webkitMaskImage = "linear-gradient(180deg, #000 60%, transparent)";
-                    cur.style.overflow = "hidden";
-                    activeElms.splice(activeElms.indexOf(obj[i].UUID));
-                }
-                else {
-                    cur.style.height = "600px";
-                    cur.style.overflow = "scroll";
-                    cur.style.webkitMaskImage = "";
-                    activeElms.push(obj[i].UUID);
-                }
-            };
+            buttons.innerHTML = `
+                            <div class="container">
+                                <div class="row">
+                                <div class="col-sm blogButton" onclick="blogRead('bl${obj[i].UUID}')" id="bl${obj[i].UUID}_read">Read</div> 
+                                    <div class="col-sm blogButton" onclick="blogAction('likes', 'bl${obj[i].UUID}')" id="bl${obj[i].UUID}_likes">like</div>
+                                    <div class="col-sm blogButton" onclick="blogAction('comment', 'bl${obj[i].UUID}')" id="bl${obj[i].UUID}_comment">comment</div>
+                                </div>
+                            </div>
+                        `;
             display.appendChild(elm);
+            display.appendChild(buttons);
         }
     }, generalErrorCallback);
+};
+let blogRead = (uid) => {
+    let cur = document.getElementById(uid);
+    let btn = document.getElementById(uid + "_read");
+    if (activeElms.includes(uid)) {
+        cur.style.height = "150px";
+        cur.style.webkitMaskImage = "linear-gradient(180deg, #000 60%, transparent)";
+        cur.style.overflow = "hidden";
+        btn.innerText = "Read";
+        activeElms.splice(activeElms.indexOf(uid));
+    }
+    else {
+        cur.style.height = "600px";
+        cur.style.overflow = "scroll";
+        cur.style.webkitMaskImage = "";
+        btn.innerText = "Close";
+        activeElms.push(uid);
+    }
+};
+let blogAction = (act, uid) => {
+    console.log(`${act} - ${uid}`);
 };
 let blogCreationSuccess = (response) => {
     alert(response);

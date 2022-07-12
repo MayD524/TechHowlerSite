@@ -17,7 +17,6 @@ class navbar {
             "Blog"          : "#blog-view",
             "Clubs"         : "#clubs-view",
             "Login"         : "#login-view",
-            "Discussions"   : "#discussions-view",
             "Account"       : "#account-view",
             "Learn more"    : "#about-view",
             "Dev"           : "#dev-view"

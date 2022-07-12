@@ -1,10 +1,31 @@
 .blogPost {
+    border: 1px solid rgba(187, 187, 187, 0.801);
     height: 150px;
     border-bottom: 2px solid lightgrey;
     padding-top: 10px;
     overflow:hidden;
     -webkit-mask-image : linear-gradient(180deg, #000 60%, transparent);
     transition: all .5s linear;
+}
+.blogPost:hover {
+    border: 2px solid rgba(120, 120, 120, 0.919);
+}
+
+.blogButton {
+    border: 1px solid rgba(206, 233, 249, 0.891);
+    border-radius: 5px;
+    background:rgba(212, 234, 248, 0.709);
+    
+}
+
+.blogButton:hover {
+    background-color: rgb(205, 234, 253);
+
+}
+
+
+.blogPostButtons {
+    margin-bottom: 20px;
 }
 
 .blogPost .blogPostHeader {

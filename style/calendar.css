@@ -3,6 +3,12 @@
     don't over-write this for everything else
 */
 
+:root {
+    --main-calendar-color: rgb(47, 75, 236);
+    --active-date: rgb(70, 113, 215);
+    --hover-date: rgb(105, 128, 183);
+}
+
 #calendar ul {
     list-style-type: none;
 }
@@ -14,7 +20,7 @@
 #calendar .month {
     padding: 70px 25px;
     width: 100%;
-    background: #1abc9c;
+    background: var(--main-calendar-color);
     text-align: center;
 }
 
@@ -79,13 +85,13 @@
 
 #calendar .days .active {
     padding: 5px !important;
-    background: #1abc9c !important;
+    background: var(--active-date) !important;
     color: white !important;
     border-radius: 5cm;
 }
 
 #calendar .days :hover {
-    background: #4b726a;
+    background: var(--hover-date);
     color: white;
     border-radius: 10cm;
     cursor: pointer;

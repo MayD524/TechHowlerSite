@@ -3,6 +3,7 @@ let blogCacheObject = {
     author    : "N/A",
     form      : "N/A",
     likes     : 0,
+    likedby   : "N/A",
     message   : "N/A",
     parent    : "N/A",
     postDate  : "N/A",
@@ -66,12 +67,19 @@ let getBlogs = (start:number, end:number) => {
                                 ${obj[i].message}
                             </div>
                         `
+                        let uName = getCookie("username");
+                        let likedText = "&#x2661;";
+                        toString().includes
+                        if (uName !== undefined && obj[i].likedby.includes(uName))
+                            likedText = "&#x2665;";
                         buttons.innerHTML = `
                             <div class="container">
                                 <div class="row">
                                 <div class="col-sm blogButton" onclick="blogRead('bl${obj[i].UUID}')" id="bl${obj[i].UUID}_read">Read</div> 
-                                    <div class="col-sm blogButton" onclick="blogAction('likes', 'bl${obj[i].UUID}')" id="bl${obj[i].UUID}_likes">like</div>
-                                    <div class="col-sm blogButton" onclick="blogAction('comment', 'bl${obj[i].UUID}')" id="bl${obj[i].UUID}_comment">comment</div>
+                                    <div class="col-sm blogButton" onclick="blogAction('likes', '${obj[i].UUID}')" id="bl${obj[i].UUID}_likes">${likedText} ${obj[i].likes}</div>
+                                    <!-- Comments may be added later :> - may 
+                                        <div class="col-sm blogButton" onclick="blogAction('comment', '${obj[i].UUID}')" id="bl${obj[i].UUID}_comment">comment</div>
+                                    -->
                                 </div>
                             </div>
                         `
@@ -109,8 +117,55 @@ let blogRead = (uid: string) => {
     }
 };
 
+let getBlogIndexByUUID = (uid:string) : number => {
+    for (let bco in blogCache) {
+        if (blogCache[bco].UUID == uid)
+            return parseInt(bco);
+    }
+    return -1;
+};
+
+let getBlogByUUID = (uid: string) => {
+    for (let bco in blogCache) {
+        if (blogCache[bco].UUID == uid)
+            return blogCache[bco];
+    }
+    return undefined;
+};
+
 let blogAction = (act:string, uid:string) => {
     console.log(`${act} - ${uid}`);
+    switch (act) {
+        case "likes":
+            console.log("here");
+            let uName = getCookie("username");
+            let likeBtn = document.getElementById(`bl${uid}_likes`)!;
+            let blog = getBlogByUUID(uid);
+            if (blog === undefined) { return; } 
+            if (uName === undefined) { return; }
+            console.log("make REQUEST!");
+            let index = getBlogIndexByUUID(uid);
+            if (blog.likedby.includes(uName)) {
+                HTTPRequest(`/api/post/like/revoke/${blog.UUID}`, "POST", "", () => {
+                    blogCache[index].likedby = blogCache[index].likedby.replace(`${uName};`, '');
+                    blogCache[index].likes --;
+                    likeBtn.innerHTML = `&#x2661; ${blogCache[index].likes}`
+                    console.log("here");
+                }, generalErrorCallback);
+                
+            } else {
+                HTTPRequest(`/api/post/like/${blog.UUID}`, "POST", "", () => {
+                    blogCache[index].likedby += `${uName};`
+                    blogCache[index].likes ++;
+                    likeBtn.innerHTML = `&#x2665; ${blogCache[index].likes}`
+                    console.log("here");
+                }, generalErrorCallback);
+
+            }
+            break;
+        case "comment":
+            break;
+    }
 };
 
 

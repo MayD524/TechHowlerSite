@@ -1,6 +1,4 @@
 
-
-
 class navbar {
     state: string;
     navbar: HTMLElement;
@@ -13,7 +11,7 @@ class navbar {
         this.elements = {
             "Home"          : "#home-view",
             "About"         : "#about-view",
-            "Projects"      : "#projects-view",
+            "Student Work"  : "#projects-view",
             "Blog"          : "#blog-view",
             "Clubs"         : "#clubs-view",
             "Login"         : "#login-view",

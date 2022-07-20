@@ -65,7 +65,9 @@ class httpServer(SimpleHTTPRequestHandler):
         user = {'authLevel': AUTH_NONE,
                 'username': 'noLogin_anon'}
         if "username" in cookies:
-            user = _generalHandler.whereT("users", ("username", cookies['username']))
+            tmp = _generalHandler.whereT("users", ("username", cookies['username']))
+            if tmp:
+                user = tmp
         route = _router.route("GET", path)
         if not route:
             self.ERROR("<h1>404</h1><p>Route %s does not exists or was not found.</p>" % path)
@@ -97,8 +99,10 @@ class httpServer(SimpleHTTPRequestHandler):
         user = {'authLevel': AUTH_NONE,
                 'username': 'noLogin_anon'}
         if "username" in cookies:
-            user = _generalHandler.whereT("users", ("username", cookies['username']))
-        
+            tmp = _generalHandler.whereT("users", ("username", cookies['username']))
+            if tmp:
+                user = tmp
+                
         if not route:
             self.ERROR("<h1>404</h1><p>Route %s does not exist or was/is not accessible to your current user.")
             return
@@ -171,6 +175,7 @@ def setRoutes() -> None:
         "postDate"  : "str",         ## when was the post made
         "message"   : "str",         ## the post data (what the message says)
         "likes"     : "int",         ## how popular is this post?
+        "likedby"   : "str",
         "parent"    : "str",         ## is this a comment? if so this should be >-1 or null
         "resources" : "str",         ## any images that were uploaded along with it.
         "form"      : "str",         ## what form does this post belong to
@@ -230,15 +235,14 @@ def runServer(host:str="localhost", port:int=8080, _handler:dbHandler=None, _rou
     httpd.server_close()
     _handler._write()
 
-assert __name__ == "__main__", "ImportError -> This file is not supposed to be imported!"
+if __name__ == "__main__":
+    _firstBoot:bool = True
 
-_firstBoot:bool = True
+    sessionKeys:dict[str,str] = {}
 
-sessionKeys:dict[str,str] = {}
+    _generalHandler = dbHandler("./database/server.db")
+    _router         = router(_generalHandler)
 
-_generalHandler = dbHandler("./database/server.db")
-_router         = router(_generalHandler)
+    runServer("0.0.0.0", 8080, _generalHandler, _router)
 
-runServer("0.0.0.0", 8080, _generalHandler, _router)
-
-_generalHandler._write()
+    _generalHandler._write()

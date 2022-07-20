@@ -28,7 +28,7 @@ let alert = (input: string, code:codes=codes.ALERT_SUCCESS) => {
             aDiv.classList.add("warning");
             break;
         case codes.ALERT_FAILURE:
-            aDiv.classList.add("errror");
+            aDiv.classList.add("error");
             break;
     }
 

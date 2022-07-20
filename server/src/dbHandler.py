@@ -149,6 +149,26 @@ class dbHandler:
         self.back()
         return dt
     
+    def whereC(self, table:str, lookFor:tuple, change:tuple|list[tuple]) -> bool:
+        """
+            Where but changes stuff
+        """
+        if not self._exists(table):
+            return False
+        
+        self.move(table)
+        dt = self.getTable()['data']
+        
+        for x in dt:
+            if (x[lookFor[0]] == lookFor[1]):
+                if (isinstance(change, list)):
+                    for y in change:
+                        x[y[0]] = y[1]
+                else:
+                    x[change[0]] = change[1]
+        
+        
+        
     def get(self, index:int) -> dict|bool:
         if len(self.data[self.cursor.currentTable]['data']) > index:
             return self.data[self.cursor.currentTable]['data'][index]
